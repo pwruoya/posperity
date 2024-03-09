@@ -127,8 +127,20 @@ nav ul li a {
     flex-direction: column;
     align-items: flex-end;
 }
+.nav ul li a:hover, .head a:hover{
+    color: chartreuse;
 
-@media screen and (max-width: 500px) {
+}
+.head a{
+    color: white;
+    text-decoration: none;
+}
+.head{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+@media screen and (max-width: 650px) {
     .nav {
         display: none;
         flex-direction: column;
@@ -152,5 +164,8 @@ nav ul li a {
 
     .bar {
         padding-bottom: 3px;
+        text-decoration: none;
+        color: white;
     }
+   
 }
