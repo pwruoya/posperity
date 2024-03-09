@@ -4,10 +4,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    justify-content:space-between;
+    justify-content: space-between;
     margin: 0px;
     background-image: url("assets/bike.jpg");
-    background-size: contain;
+    background-size: cover;
 }
 
 header {
@@ -36,16 +36,18 @@ nav ul li a {
     color: #fff;
     text-decoration: none;
 }
-#maindiv{
+
+#maindiv {
     min-width: 100%;
 }
+
 .main-content {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
     text-align: center;
     opacity: 0.8;
     /* flex: 1; */
@@ -59,15 +61,19 @@ nav ul li a {
 .button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #1d73ce;
     color: #fff;
     text-decoration: none;
+    border-width: 1px;
+    border-color: #ddd;
     border-radius: 5px;
 }
 
 .profile-image img {
-    width: 100px; /* Adjust size as needed */
-    border-radius: 50%; /* Make image circular */
+    width: 100px;
+    /* Adjust size as needed */
+    border-radius: 50%;
+    /* Make image circular */
     opacity: 1;
 }
 
@@ -77,15 +83,18 @@ nav ul li a {
     padding: 10px;
     text-align: center;
 }
-.nav{
+
+.nav {
     display: flex;
-    align-items: center;
+    align-items: end;
     flex-direction: column;
 }
+
 /* Remaining CSS styles unchanged */
-.find{
+.find {
     align-self: flex-end;
 }
+
 .student-table {
     width: 100%;
     border-collapse: collapse;
@@ -110,4 +119,38 @@ nav ul li a {
 
 .student-table tr:hover {
     background-color: #ddd;
+}
+
+.menu,
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+@media screen and (max-width: 500px) {
+    .nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        width: 100%;
+        top: 50px;
+        background-color: #333;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .navbar-toggle {
+        display: none;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .bar {
+        padding-bottom: 3px;
+    }
 }
