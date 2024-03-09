@@ -19,24 +19,30 @@
             }
             ?>
         </h1>
-        <div class="menu">
-            <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
-            <div id="hide" class="navbar-toggle" >
-                <div class="bar">Home</div>
-                <div class="bar">About</div>
-                <div class="bar">Services</div>
-                <div class="bar">Services</div>
+        <div class="head">
+            <a href="logout.php">Logout</a>
+            <div class="menu">
+                <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
+                <div id="hide" class="navbar-toggle">
+                    <a class="bar" href="#">Home</a>
+                    <a class="bar" href="#">Make Sale</a>
+                    <a class="bar" href="#">Inventory</a>
+                    <a class="bar" href="#">Transactions</a>
+                    <a class="bar" href="about.html">About</a>
+                    <a class="bar" href="services.html">Services</a>
+                </div>
             </div>
+            <nav class="nav" id="navbarLinks">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Make Sale</a></li>
+                    <li><a href="#">Inventory</a></li>
+                    <li><a href="#">Transactions</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav class="nav" id="navbarLinks">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
     </header>
 
     <div id="maindiv">
