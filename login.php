@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1>Distributed systems Assignment Login Page</h1>
+        <h1>Posperity System</h1>
     </header>
 
 
@@ -113,7 +113,7 @@
     </form>
 
     <footer>
-        <p>&copy; distributed systems assignment.</p>
+        <p>&copy; 2024 Posperity. All rights reserved.</p>
     </footer>
 </body>
 
