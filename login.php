@@ -53,7 +53,8 @@
                     $userInput = $_POST["username"];
 
                     // Prepare SQL statement
-                    $sql = "SELECT `user_id`, `user_name`, `password`, `merchant`, `email`, `fullname`, `address`, `mobile` FROM `user` WHERE user_name = ? OR email = ?";
+                    $sql = "SELECT u.user_id, u.user_name, u.password, u.merchant, u.email, u.fullname, u.address, u.mobile,m.merchantname 
+                        FROM user u LEFT JOIN merchant m ON u.merchant = m.mid WHERE u.user_name = ? OR u.email = ?";
                     $stmt = $conn->prepare($sql);
 
                     // Bind the parameter to the statement
@@ -70,6 +71,7 @@
                         $row = $result->fetch_assoc();
                         $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
+                        $mname = $row['merchantname'];
 
 
                         // Password entered by the user during login
@@ -77,14 +79,15 @@
                         $hashedUserEnteredPassword = password_hash($userEnteredPassword, PASSWORD_DEFAULT);
                         // Verify if the user-entered password matches the stored hashed password
                         echo password_verify($userEnteredPassword, $hashedPassword);
-                        if (password_verify($userEnteredPassword, $hashedPassword)){
-                            
+                        if (password_verify($userEnteredPassword, $hashedPassword)) {
+
                             echo "match found";
                             // Start the session
                             session_start();
 
                             // Store the username in the session
                             $_SESSION["username"] = $uname;
+                            $_SESSION["merchantname"] = $mname;
                             echo $_SESSION["username"];
 
                             // Redirect to the home page

@@ -10,7 +10,12 @@
 
 <body>
     <header>
-        <h1>Assignment home page</h1>
+        <h1>
+            <?php
+            session_start();
+            echo $_SESSION['merchantname'];
+            ?>
+        </h1>
         <nav class="nav">
             <ul>
                 <li><a href="#">Home</a></li>
@@ -31,7 +36,6 @@
         <div class="main-content" id="div1">
             <div class="main-content" id="div2">
                 <?php
-                session_start();
                 if (isset($_SESSION['username'])) {
                     // Display user details if logged in
                     echo "<h2>Welcome, " . $_SESSION['username'] . "</h2>";
