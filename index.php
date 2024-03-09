@@ -13,7 +13,9 @@
         <h1>
             <?php
             session_start();
-            echo $_SESSION['merchantname'];
+            if (isset($_SESSION['merchantname'])) {
+                echo $_SESSION['merchantname'];
+            }
             ?>
         </h1>
         <nav class="nav">
