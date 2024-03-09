@@ -13,25 +13,25 @@ include "mail.php";
 
 <body>
     <header>
-        <h1>Distributed systems assignment sign up page</h1>
+        <h1>Posperity System</h1>
     </header>
     <div class="signup-form">
         <h2>Sign Up</h2>
         <form action="signup.php" method="post">
             <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
+                <label for="adm">Merchant Name</label>
+                <input type="text" id="mname" name="mname" required>
             </div>
             <div class="form-group">
-                <label for="adm">Registration Number</label>
-                <input type="text" id="adm" name="adm" required>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="mobile">Mobile Number</label>
                 <input type="text" id="mobile" name="mobile" required>
             </div>
             <div class="form-group">
-                <label for="address">Address</label>
+                <label for="address">Bussiness Address</label>
                 <input type="text" id="address" name="address" required>
             </div>
             <div class="form-group">
@@ -51,7 +51,7 @@ include "mail.php";
                 <input type="password" id="cpassword" name="cpassword" required>
             </div>
             <button type="submit">Sign Up</button>
-            <?php if ($_SERVER['REQUEST_METHOD']!='POST') : ?>
+            <?php if ($_SERVER['REQUEST_METHOD'] != 'POST') : ?>
                 <div> Already have an account,<a href='login.php'>login</a>?</div>
             <?php endif; ?>
             <?php
@@ -62,17 +62,11 @@ include "mail.php";
                 $email = $_POST['email'];
                 $password = $_POST['password'];
                 $cpassword = $_POST['cpassword'];
-                $adress = $_POST['address'];
-                $adm = $_POST['adm'];
+                $address = $_POST['address'];
+                $mname = $_POST['mname'];
                 $mobile = $_POST['mobile'];
 
-                // You can add your validation and database insertion logic here
 
-                // For demonstration purposes, let's just print the received data
-                // echo "Username: $username <br>";
-                // echo "Email: $email <br>";
-                // echo "Password: $password <br>";
-                // Example usage:
                 if ($password == $cpassword) {
                     if (is_string($name)) {
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -89,12 +83,16 @@ include "mail.php";
                             // Hash the password
                             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                            $findsql = $sql = "SELECT `UID` FROM `users` WHERE `Username` = ? OR `email` = ? OR `UID` = ?";
+                            // check if username or email already exists
+                            // if rows > 0 then write to database
+                            // then send email
+
+                            $findsql = $sql = "SELECT `user_id` FROM `user` WHERE `user_name` = ? OR `email` = ?";
                             $stmt = $conn->prepare($sql);
 
                             // Bind the parameters to the statement
-                            
-                            $stmt->bind_param("sss", $username, $email, $adm);
+
+                            $stmt->bind_param("ss", $username, $email);
 
                             // Execute the query
                             $stmt->execute();
@@ -105,35 +103,73 @@ include "mail.php";
                             if ($result->num_rows == 0) {
 
                                 // SQL query with placeholders
-                                $sql = "INSERT INTO `users`(`UID`, `Username`, `email`, `password`, `Name`, `mobile`, `address`) VALUES (?,?,?,?,?,?,?)";
-
+                                $sql = "INSERT INTO `merchant`(`merchantname`) VALUES (?)";
                                 // Prepare and bind the statement
                                 $stmt = $conn->prepare($sql);
-                                $stmt->bind_param("sssssss", $adm, $username, $email, $password, $name, $mobile, $adress);
+                                $stmt->bind_param("s", $mname);
 
                                 // Execute the statement
                                 if ($stmt->execute()) {
-                                    //if db written seccessfully then:
-                                    $to_email = $email;
-                                    $subject = "WELCOME";
-                                    $body = "
-                            <h1>Welcome to Our Website</h1>
-                            <p>Dear $username,</p>
-                            <p>Thank you for joining our website. We are excited to have you on board!</p>
-                            <p>Best regards,<br>Distributed systems</p>";
+                                    $sql = "SELECT `mid` FROM `merchant` WHERE `merchantname` = ?";
+                                    $stmt = $conn->prepare($sql);
 
-                                    $from_email = "keterdummy@gmail.com";
+                                    // Bind the parameter to the statement
+                                    $stmt->bind_param("s", $mname);
 
-                                    if (sendEmail($to_email, $subject, $body, $from_email)) {
-                                        echo "Email sent successfully.";
-                                        header("Location: login.php");
-                                    } else {
-                                        echo "Email sending failed.";
+                                    // Execute the query
+                                    $stmt->execute();
+
+                                    // Get the result
+                                    $result = $stmt->get_result();
+
+                                    // Check if the query returned any rows
+                                    if ($result->num_rows > 0) {
+                                        $row = $result->fetch_assoc();
+                                        $mid  = $row['mid'];
+                                        // SQL query with placeholders
+                                        $sql = "INSERT INTO `user`( `user_name`, `password`, `merchant`, `email`, `fullname`, `address`, `mobile`) VALUES (?,?,?,?,?,?,?)";
+                                        // Prepare and bind the statement
+                                        $stmt = $conn->prepare($sql);
+                                        $stmt->bind_param("sssssss", $username, $hashedPassword, $mid, $email, $name, $address, $mobile);
+
+                                        // Execute the statement
+                                        if ($stmt->execute()) {
+                                            //if db written seccessfully then:
+                                            $to_email = $email;
+                                            $subject = "WELCOME";
+                                            $body = "
+                                                 <div style='max-width: 600px; margin: 0 auto; padding: 20px;'>
+                                                    <h1>Welcome to Posperity - Your Business Empowered with Our POS Web App!</h1>
+                                                    <p>Dear $name,</p>
+                                                    <p>On behalf of the entire team here at Posperity, I want to extend a warm welcome to you as a valued
+                                                        member of our community! We are thrilled to have you on board and excited to embark on this journey together
+                                                        to elevate your business to new heights.</p>
+
+                                                    <p>We're here to support you every step of the way. Whether you have questions, need assistance, or want to
+                                                        explore additional features, our dedicated support team is just a click away.</p>
+                                                    <p>Thank you once again for choosing Posperity. We're committed to your success and look forward to
+                                                        helping you thrive in the digital market.</p>
+                                                    <p>Warm regards,</p>
+                                                    <p>Posperity</p>
+                                                </div>";
+
+                                            $from_email = "keterdummy@gmail.com";
+
+                                            if (sendEmail($to_email, $subject, $body, $from_email)) {
+                                                echo "Email sent successfully.";
+                                                header("Location: login.php");
+                                            } else {
+                                                echo "Email sending failed.";
+                                            }
+                                        } else {
+                                            echo "Error: " . $sql . "<br>" . $conn->error;
+                                        }
+                                    }else{
+                                        echo "merchant does not exist";
                                     }
-                                } else {
+                                }else{
                                     echo "Error: " . $sql . "<br>" . $conn->error;
                                 }
-
                                 // Close statement and connection
                                 $stmt->close();
                                 $conn->close();

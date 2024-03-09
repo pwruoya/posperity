@@ -3,7 +3,7 @@
  $servername = "localhost";
  $dbusername = "root";
  $dbpassword = "";
- $database = "ds_userdb";
+ $database = "posperity";
  
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -35,7 +35,7 @@ function sendEmail($to_email, $subject, $body, $from_email)
         $mail->Port = 587; // TCP port to connect to
 
         // Sender and recipient details
-        $mail->setFrom($from_email, "Distributed Assignment");
+        $mail->setFrom($from_email, "Posperity team");
         $mail->addAddress($to_email);
 
         // Email content
