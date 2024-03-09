@@ -68,7 +68,7 @@
                     // Check if the query returned any rows
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
-                        $uname  = $row['Username'];
+                        $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
 
 
