@@ -38,7 +38,7 @@
                     $servername = "localhost";
                     $username = "root";
                     $password = "";
-                    $database = "ds_userdb";
+                    $database = "posperity";
 
                     // Create connection
                     $conn = new mysqli($servername, $username, $password, $database);
@@ -53,7 +53,7 @@
                     $userInput = $_POST["username"];
 
                     // Prepare SQL statement
-                    $sql = "SELECT `password`, `Username` FROM `users` WHERE username = ? OR email = ?";
+                    $sql = "SELECT `user_id`, `user_name`, `password`, `merchant`, `email`, `fullname`, `address`, `mobile` FROM `user` WHERE user_name = ? OR email = ?";
                     $stmt = $conn->prepare($sql);
 
                     // Bind the parameter to the statement
@@ -76,8 +76,9 @@
                         $userEnteredPassword = $_POST["password"];
                         $hashedUserEnteredPassword = password_hash($userEnteredPassword, PASSWORD_DEFAULT);
                         // Verify if the user-entered password matches the stored hashed password
-                        // password_verify($userEnteredPassword, $hashedPassword))
-                        if ($userEnteredPassword == $hashedPassword) {
+                        echo password_verify($userEnteredPassword, $hashedPassword);
+                        if (password_verify($userEnteredPassword, $hashedPassword)){
+                            
                             echo "match found";
                             // Start the session
                             session_start();
