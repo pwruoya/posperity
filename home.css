@@ -6,14 +6,16 @@ body {
     min-height: 100vh;
     justify-content:space-between;
     margin: 0px;
-    
+    background-image: url("assets/bike.jpg");
+    background-size: contain;
 }
 
 header {
-    background-color: #007bff;
+    background-color: #084e99;
     color: #fff;
     padding: 20px;
     text-align: center;
+    opacity: 0.9;
 }
 
 header h1 {
@@ -45,11 +47,13 @@ nav ul li a {
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     text-align: center;
+    opacity: 0.8;
     /* flex: 1; */
 }
 
 .main-content h2 {
-    color: #007bff;
+    color: #033366;
+    opacity: 1;
 }
 
 .button {
@@ -64,6 +68,7 @@ nav ul li a {
 .profile-image img {
     width: 100px; /* Adjust size as needed */
     border-radius: 50%; /* Make image circular */
+    opacity: 1;
 }
 
 .footer {
