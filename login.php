@@ -72,6 +72,7 @@
                         $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
                         $mname = $row['merchantname'];
+                        $merid = $row['merchant'];
 
 
                         // Password entered by the user during login
@@ -88,6 +89,7 @@
                             // Store the username in the session
                             $_SESSION["username"] = $uname;
                             $_SESSION["merchantname"] = $mname;
+                            $_SESSION["merchantid"] = $merid;
                             echo $_SESSION["username"];
 
                             // Redirect to the home page

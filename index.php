@@ -26,7 +26,7 @@
                 <div id="hide" class="navbar-toggle">
                     <a class="bar" href="#">Home</a>
                     <a class="bar" href="#">Make Sale</a>
-                    <a class="bar" href="#">Inventory</a>
+                    <a class="bar" href="inventory.php">Inventory</a>
                     <a class="bar" href="#">Transactions</a>
                     <a class="bar" href="about.html">About</a>
                     <a class="bar" href="services.html">Services</a>
@@ -36,7 +36,7 @@
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="#">Make Sale</a></li>
-                    <li><a href="#">Inventory</a></li>
+                    <li><a href="inventory.php">Inventory</a></li>
                     <li><a href="#">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
