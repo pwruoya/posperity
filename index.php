@@ -57,9 +57,6 @@
                 echo "<a href='login.php' class='button'>Login</a>";
             }
             ?>
-            <button class="button">
-                make sale
-            </button>
         </div>
 
     </div>

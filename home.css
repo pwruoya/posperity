@@ -167,6 +167,7 @@ tr {
 
 .card-content {
     padding: 10px;
+    max-width: 200px;
 }
 
 .card h4 {
@@ -187,7 +188,8 @@ tr {
 
 .inventorydiv1 {
     display: flex;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 

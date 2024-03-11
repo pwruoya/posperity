@@ -85,9 +85,9 @@
                     echo "<img src='" . $row["img_url"] . "' alt='Product Image'>";
                     echo "<div class='card-content'>";
                     echo "<h4>" . $row["name"] . "</h4>";
-                    echo "<p>Description: " . $row["description"] . "</p>";
-                    echo "<p>Price: $" . $row["price"] . "</p>";
-                    echo "<p>Quantity: " . $row["quantity"] . "</p>";
+                    echo "<p>" . $row["description"] . "</p>";
+                    echo "<p>$" . $row["price"] . "</p>";
+                    echo "<p>stock: " . $row["quantity"] . "</p>";
                     echo "</div>";
                     echo "</div>";
                 }
