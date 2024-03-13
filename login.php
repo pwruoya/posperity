@@ -69,6 +69,7 @@
                     // Check if the query returned any rows
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
+                        $suid  = $row['user_id'];
                         $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
                         $mname = $row['merchantname'];
@@ -90,6 +91,7 @@
                             $_SESSION["username"] = $uname;
                             $_SESSION["merchantname"] = $mname;
                             $_SESSION["merchantid"] = $merid;
+                            $_SESSION["userid"] = $suid;
                             echo $_SESSION["username"];
 
                             // Redirect to the home page

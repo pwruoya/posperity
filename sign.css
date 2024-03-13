@@ -1,16 +1,18 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: white;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     justify-content: space-between;
     margin: 0;
     padding: 0;
+    background-image: url("assets/bike.jpg");
+    background-size: cover;
 }
 
 header {
-    background-color: #007bff;
+    background-color: rgba(50, 67, 103,0.9);
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -57,6 +59,7 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    background-color: rgba(255, 255, 255,0.9);
 }
 
 @media (min-width: 470px) {
@@ -94,7 +97,7 @@ footer {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #0e1f3d;
     color: #fff;
     border: none;
     border-radius: 5px;
