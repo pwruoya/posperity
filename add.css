@@ -33,10 +33,10 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
-button {
+/* button {
     background-color: #dc3545;
     margin-left: 10px;
-}
+} */
 
 
 body {
@@ -63,4 +63,14 @@ header {
 
 header h1 {
     margin: 0;
+}
+#imgdiv video{
+    width: 98%;
+}
+#imgdiv img{
+max-width: 98%;
+}
+.spacebtn{
+    display: flex;
+    justify-content: space-between;
 }
