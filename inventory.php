@@ -16,7 +16,7 @@
             <?php
             session_start();
             if (isset($_SESSION['merchantname'])) {
-                echo $_SESSION['merchantname'];
+                echo "{$_SESSION['merchantname']} Inventory";
             }
             ?>
         </h1>
@@ -76,7 +76,13 @@
             border: none;
             cursor: pointer;
         }
+
+        .edit {
+            display: flex;
+            justify-content: end;
+        }
     </style>
+
     <div class="inventorydiv">
         <div>
             <div class="actionsBar">
@@ -123,14 +129,25 @@
                 if ($result->num_rows > 0) {
                     // Output data of each row
                     while ($row = $result->fetch_assoc()) {
-
-                        echo "<div class='card'>";
+                        $prod = strval($row["product_id"]);
+                        echo "<div class='card' style='color:white;'>";
                         echo "<img src='" . $row["img_url"] . "' alt='Product Image'>";
                         echo "<div class='card-content'>";
                         echo "<h4>" . $row["name"] . "</h4>";
                         echo "<p>" . $row["description"] . "</p>";
                         echo "<p>Ksh. " . $row["price"] . "</p>";
-                        echo "<p>stock: " . $row["quantity"] . "</p>";
+                        $quantity = $row["quantity"];
+
+                        // Check if quantity is less than zero
+                        if ($quantity <= 0) {
+                            // If quantity is negative, echo "Out of stock" in red
+                            echo '<p style="color: red;">Out of stock</p>';
+                        } else {
+                            // Otherwise, echo the quantity as normal
+                            echo "<p>stock: $quantity</p>";
+                        }
+                        echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div>';
+
                         echo "</div>";
                         echo "</div>";
                     }
@@ -178,9 +195,9 @@
     }
 
     function toAdd() {
-            // Redirect to another page (replace 'page-url' with the actual URL)
-            window.location.href = 'add_product.php';
-        }
+        // Redirect to another page (replace 'page-url' with the actual URL)
+        window.location.href = 'add_product.php';
+    }
 </script>
 
 </html>

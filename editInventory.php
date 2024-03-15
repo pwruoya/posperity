@@ -1,5 +1,8 @@
 <?php
 session_start();
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $_SESSION['selectedId'] = $_GET['product_id'];
+}
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,22 +15,41 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Select the last inserted product ID from the product table
-$sql = "SELECT MAX(product_id) as last_product_id FROM product";
-$result = $conn->query($sql);
+// Prepare and bind the SQL query with a placeholder for the ID
+$sql = "SELECT `product_id`, `name`, `description`, `price`, `quantity`, `img_url`, `user`, `merchant` FROM `product` WHERE `product_id` = ?";
+$stmt = $conn->prepare($sql);
+
+// Bind the ID variable to the prepared statement
+$id = intval($_SESSION['selectedId']);
+$stmt->bind_param("i", $id);
+
+// Execute the statement
+$stmt->execute();
+
+// Get the result
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        $_SESSION['lastProductId'] = $row["last_product_id"];
-        // echo "Last inserted product ID: " . $lastProductId;
-        // You can store $lastProductId in a PHP variable for further use
-    }
+    // Fetch the first (and only) row since product_id should be unique
+    $row = $result->fetch_assoc();
+
+    // Assign fetched values to PHP variables
+    $productId = $row["product_id"];
+    $name = $row["name"];
+    $description = $row["description"];
+    $price = $row["price"];
+    $quantity = $row["quantity"];
+    $imgUrl = $row["img_url"];
+    $user = $row["user"];
+    $merchant = $row["merchant"];
 } else {
-    echo "No products found";
+    echo "No product found with the specified ID";
 }
 
+// Close the statement and connection
+$stmt->close();
 $conn->close();
+
 
 ?>
 <!DOCTYPE html>
@@ -46,56 +68,81 @@ $conn->close();
 <body>
     <header>
         <h1>
-            Add item to Inventory
+            <?php
+            if (isset($_SESSION['merchantname'])) {
+                echo $_SESSION['merchantname'];
+            }
+            ?>
         </h1>
     </header>
     <div class="container">
-        <h2>Add New Item</h2>
-        <form id="productForm" action="add_product.php" method="POST">
+        <h2>Edit product details</h2>
+        <form id="productForm" action="editInventory.php" method="POST">
 
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <?php
+            // Assuming you have fetched the product details and stored them in $row
+            if (!empty($productId)) {
+            ?>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<?php echo $name; ?>" required>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="3" required></textarea>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="3" required><?php echo $description; ?></textarea>
 
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" step="0.01" required>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" value="<?php echo $price; ?>" required>
 
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" required>
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="<?php echo $quantity; ?>" required>
 
-            <label for="img_url">Add product image:</label>
-            <input type="text" id="img_url" name="img_url" style="display: none;">
+                <label for="img_url">Change product image:</label>
+                <input type="text" id="img_url" name="img_url" value="<?php echo $imgUrl; ?>" style="row-gap: 3;">
 
+                <!-- Buttons for image upload -->
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                <div class="spacebtn">
+                    <button type="button" onclick="openFilePicker()">Choose Image</button>
+                    <button type="button" onclick="openCamera()">Capture Image</button>
+                </div>
+                <br>
+                <br>
+                <div id="imgdiv">
+                    <img id="img" src="<?php echo $imgUrl; ?>" alt="">
+                </div>
+                <br>
+                <button type="button" onclick="upldClick()" id="upld">upload selected image</button>
+                <br>
+                <br>
+                <div class="spacebtn">
+                    <button type="button" onclick="toInventory()"><i class="fa-solid fa-angles-left" style="color: #ffffff;"></i></i></button>
+                    <input type="submit" value="Add Product">
+                </div>
+            <?php
+            } else {
+                echo "No product found with the specified ID";
+            }
+            ?>
 
-            <!-- Buttons for image upload -->
-            <input type="file" id="imageInput" accept="image/*" style="display: none;">
-            <div class="spacebtn">
-                <button type="button" onclick="openFilePicker()">Choose Image</button>
-                <button type="button" onclick="openCamera()">Capture Image</button>
-            </div>
-            <br>
-            <br>
-            <div id="imgdiv">
-                <img id="img" src="" alt="">
-            </div>
-            <br>
-            <button type="button" id="upld">upload selected image</button>
-            <br>
-            <br>
-            <div class="spacebtn">
-                <button type="button" onclick="toInventory()"><i class="fa-solid fa-angles-left" style="color: #ffffff;"></i></i></button>
-                <input type="submit" value="Add Product">
-            </div>
         </form>
 
+
         <?php
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "posperity";
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if all required fields are present
             if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price']) && isset($_POST['quantity']) && isset($_POST['img_url'])) {
-
 
                 // Sanitize inputs to prevent SQL injection
                 $name = htmlspecialchars($_POST['name']);
@@ -103,47 +150,38 @@ $conn->close();
                 $price = floatval($_POST['price']); // Convert to float for price
                 $quantity = intval($_POST['quantity']); // Convert to integer for quantity
                 $img_url = htmlspecialchars($_POST['img_url']);
+                // $product_id = intval($_POST['product_id']); // Convert to integer for product_id
 
                 // Additional sanitization and validation can be added here
 
-                // Connect to your database
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "posperity";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Prepare and bind parameters for the SQL statement
-                $sql = "INSERT INTO product (name, description, price, quantity, img_url, user, merchant) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                // Prepare and bind parameters for the SQL statement to update product details
+                $sql = "UPDATE `product` SET `name`=?, `description`=?, `price`=?, `quantity`=?, `img_url`=?, `user`=?, `merchant`=? WHERE `product_id`=?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
-
+                $stmt->bind_param("ssdissii", $name, $description, $price, $quantity, $img_url, $user, $merchant, $productId);
 
                 // Example user and merchant values (adjust as needed)
-                $user = $_SESSION['userid'];;
+                $user = $_SESSION['userid'];
                 $merchant = $_SESSION['merchantid']; // Assuming you store the merchant ID in a session variable
 
-                // Execute the SQL statement
+                // Execute the SQL statement to update product details
                 if ($stmt->execute()) {
-                    echo "Item added successfully.";
+                    echo "Product updated successfully.";
                     // You can redirect the user to another page if needed
-                    // header("Location: inventory.php");
+                    header("Location: inventory.php");
                     // exit();
                 } else {
-                    echo "Error adding item: " . $stmt->error;
+                    echo "Error updating product: " . $stmt->error;
                 }
 
-                // Close the statement and connection
+                // Close the statement
                 $stmt->close();
-                $conn->close();
             } else {
                 echo "All fields are required.";
             }
         }
+
+        // Close the connection
+        $conn->close();
         ?>
     </div>
     <footer>
@@ -154,6 +192,10 @@ $conn->close();
         function toInventory() {
             // Redirect to another page (replace 'page-url' with the actual URL)
             window.location.href = 'inventory.php';
+        }
+
+        function upldClick() {
+            console.log("Upload selected image clicked");
         }
 
         // Function to open file picker for storage selection
@@ -289,7 +331,7 @@ $conn->close();
     const storage = getStorage(app);
 
     // Function to upload file from Local Storage to Firebase Storage
-    function uploadFileFromLocalStorage(storageRef, localStorageKey, targetElementId, buttonId) {
+    function uploadFileFromLocalStorage(storageRef, localStorageKey) {
         const fileData = localStorage.getItem(localStorageKey);
         const button = document.getElementById('upld');
         const urltt = document.getElementById("img_url")
@@ -330,7 +372,8 @@ $conn->close();
 
 
 
-    var prod_name = "<?php echo $_SESSION['lastProductId']+1; ?>";
+    var prod_name = "<?php echo intval($_GET['product_id']); ?>";
+
     const storageRef = ref(storage, 'images/' + prod_name + '.txt'); // Specify the file path or name in Firebase Storage
     const localStorageKey = 'capturedImage'; // Key used to store the file data in Local Storage
     const targetElementId = 'img_url'; // ID of the target element to set the download URL
