@@ -6,20 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
     <link rel="stylesheet" href="home.css">
+    <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
+    <script src="title.js"></script>
 </head>
 
 <body>
     <header>
-        <h1>About Our Website</h1>
-        <nav>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
+        <h1>
+            Posperity point of sale system
+        </h1>
+        <div class="head">
+            <a href="logout.php">Logout</a>
+            <div class="menu">
+                <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
+                <div id="hide" class="navbar-toggle">
+                    <a class="bar" href="index.php">Home</a>
+                    <a class="bar" href="makeSale.php">Make Sale</a>
+                    <a class="bar" href="inventory.php">Inventory</a>
+                    <a class="bar" href="#">Transactions</a>
+                    <a class="bar" href="#">About</a>
+                    <a class="bar" href="services.html">Services</a>
+                </div>
+            </div>
+            <nav class="nav" id="navbarLinks">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="makeSale.php">Make Sale</a></li>
+                    <li><a href="inventory.php">Inventory</a></li>
+                    <li><a href="#">Transactions</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
     <style>
         .main-content {
@@ -27,28 +46,444 @@
         }
     </style>
     <div class="main-content">
-        <h2>Welcome to Our Website</h2>
-        <p>Our web application is designed to provide users with a convenient platform to manage their contact details
-            securely. Here are some of the key features:</p>
+        <div>
+            <h1>POSPERITY SYSTEM</h1>
 
-        <h3>Features:</h3>
-        <ul>
-            <li>User Login Page:</li>
-            <p>Our website has a user-friendly login page where users can securely log in using their username and
-                password.</p>
+            <p>Enhancing Small-Scale Business Operations through a Web-Based Point of Sale Terminal</p>
 
-            <li>Forgot Password Functionality:</li>
-            <p>We provide a "Forgot Password" link on the login page. Users can reset their password by entering their
-                email address, and a reset password message will be sent to their email.</p>
+            <h2>CHAPTER ONE</h2>
 
-            <li>Contact Detail Form:</li>
-            <p>Once logged in, users can view contact details, including mobile phone number, email
-                address, physical address, and registration number.</p>
+            <h3>Area of study</h3>
 
-            <li>Search Contacts:</li>
-            <p>Our website allows users to search for contacts using a person's registration number. This feature helps
-                users quickly find and access contact details.</p>
-        </ul>
+            <p>Business Management, Information Technology</p>
+
+            <h3>Definition of the problem</h3>
+
+            <p>Small-scale businesses face significant operational challenges due to outdated and manual transaction
+                processes,
+                resulting in inefficiencies, errors, and limited data insights. The absence of a modern Point of Sale
+                (POS)
+                system tailored for their specific needs hampers their ability to compete in today's digital market. The
+                key
+                problems this project seeks to resolve include:</p>
+
+            <p>1. Reliance on manual Transaction Processes often leading to delays, errors, and inefficiencies.</p>
+
+            <p>2. Limited Inventory Management resulting in challenges such as stockouts, overstocking, and difficulties
+                in
+                tracking product availability.</p>
+
+            <p>3. Lack of Reporting Capabilities for generating comprehensive reports on sales, inventory turnover, and
+                customer
+                trends, hindering strategic decision-making that is crucial in the modern business environment.</p>
+
+            <p>4. Customer Experience Challenges such as slower transaction processing times, affecting the overall
+                customer
+                experience and potentially leading to customer dissatisfaction and unnecessary time wastage.</p>
+
+            <p>5. High Costs of Traditional POS Systems since existing POS solutions are designed for larger enterprises
+                are
+                often expensive and complex, making them impractical and unaffordable for small-scale businesses.</p>
+
+            <p>Purpose of the study</p>
+
+            <p>The proposed web-based POS terminal project seeks to address these challenges by developing a tailored
+                solution
+                that enhances transaction processes, inventory management, and reporting, while remaining affordable and
+                scalable for small-scale businesses and suits their day-to-day activities.</p>
+
+            <h3>Background to the study</h3>
+
+            <p>This study is prompted by direct interactions with small-scale business operators grappling with the
+                drawbacks of
+                unreliable manual systems. Conversations with friends and acquaintances consistently emphasize the
+                anticipated
+                advantages of adopting a straightforward Point of Sale (POS) system. This research seeks to address the
+                observed
+                challenges and explore the potential transformational benefits that a simplified POS solution could
+                bring to
+                small-scale businesses.</p>
+
+            <h3>Research objectives</h3>
+
+            <p><b>Main objective</b></p>
+
+            <p>To develop POSperity point of sale system</p>
+
+            <p><b> Specific objectives of the study</b></p>
+
+            <p>To design POSperity point of sale system</p>
+
+            <p>To implement POSperity point of sale system</p>
+
+            <p>To test POSperity point of sale system</p>
+
+            <h3> Research questions</h3>
+
+            <p>How will POSperity point of sale system be designed</p>
+
+            <p>How will POSperity point of sale system be implemented</p>
+
+            <p>How will POSperity point of sale system be tested</p>
+
+            <h3>Significance of study</h3>
+
+            <p>Empowering Small Businesses through Technology: This study focuses on equipping small businesses across
+                industries with a customized Point-of-Sale (POS) system, aiming to significantly enhance their
+                operational
+                efficiency and competitiveness. Implementing an automated POS system eliminates manual processes,
+                leading to
+                faster, more accurate transactions and minimized errors. Robust inventory management ensures optimal
+                stock
+                levels, preventing lost revenue from shortages or overstocking. Moreover, comprehensive reporting
+                empowers
+                informed decision-making by providing real-time data on sales, inventory, and customer trends, enabling
+                strategic growth. By improving transaction speed and overall system efficiency, the POS system
+                contributes to a
+                positive customer experience, potentially increasing satisfaction and loyalty. Recognizing the financial
+                constraints of small businesses, the study emphasizes affordability and accessibility, making modern POS
+                technology readily available. This empowers businesses to compete effectively, as the tailored and
+                cost-effective system provides a competitive edge in the digital market. Furthermore, the study promotes
+                technology adoption through the integration of POS systems, fostering a culture of adaptation and
+                ensuring
+                long-term sustainability for small businesses. Ultimately, by addressing these challenges through a
+                customized
+                POS system, the study aims to empower small businesses, contributing significantly to local economies
+                and
+                driving positive community development through increased employment opportunities.</p>
+
+            <h3>Scope of the Study:</h3>
+
+            <p>This study dives into the world of small-scale businesses across diverse industries, aiming to understand
+                their
+                unique needs and challenges. Specifically, it focuses on developing and implementing a customized
+                Point-of-Sale
+                (POS) system tailored to their requirements. This system tackles operational hurdles like transaction
+                processing, inventory management, reporting, and customer experience, all within the context of small
+                businesses. Technology adoption plays a crucial role, with the study assessing and promoting the
+                integration of
+                modern technology, especially POS systems, among these businesses. Affordability is paramount, ensuring
+                accessibility for even those with limited financial resources. Furthermore, the study delves into the
+                potential
+                local economic impact of empowering small businesses through improved efficiency and competitiveness.
+                Recognizing the diverse technical expertise among small business owners, the design of the POS system
+                prioritizes a user-friendly interface, making it accessible and easy to use for all.</p>
+
+            <h3>Limitations of the Study:</h3>
+
+            <p>The proposed POS system holds immense potential for empowering small businesses. However, to ensure its
+                effectiveness in the real world, we must recognize and address certain limitations. While the study
+                primarily
+                focuses on specific industries and regions, different contexts might harbor unique challenges demanding
+                adaptation. Additionally, successful implementation hinges on the existing technological infrastructure
+                of each
+                business. Limitations in internet connectivity, hardware capabilities, or software compatibility could
+                pose
+                hurdles. Furthermore, achieving widespread adoption might require more attention than initially
+                anticipated.
+                Factors like user resistance, lack of technical skills, or inadequate training materials could hinder
+                seamless
+                integration. It's crucial to remember that external factors like economic fluctuations, regulatory
+                changes, or
+                unforeseen events can also influence outcomes, necessitating built-in adaptability. Beyond immediate
+                benefits,
+                long-term sustainability and the ability to evolve alongside technological advancements require thorough
+                exploration. Continuous updates, maintenance, and robust security measures are essential for ensuring
+                the
+                system's enduring viability. </p>
+
+            <p>Additionally, due to the sensitive nature of business data, potential security and privacy concerns
+                demand
+                comprehensive evaluation and mitigation strategies. While fully customizing the system for every
+                individual
+                business might be challenging, leading to some degree of standardization, striking a balance between
+                individual
+                needs and broader usability is crucial. Finally, acknowledging dependencies on external factors like
+                third-party
+                technologies or services is essential, as they introduce uncertainties beyond our direct control.
+                Exploring
+                alternative solutions or contingency plans can help navigate these external dependencies. By proactively
+                addressing these limitations and considerations throughout development and implementation, the study can
+                pave
+                the way for a POS system that is not only robust and adaptable but truly empowers small businesses in
+                the long
+                run.</p>
+
+            <h2>CHAPTER TWO: Literature review</h2>
+
+            <h3>Introduction</h3>
+
+            <p>The retail industry in today's time is experiencing rapid changes, resulting in the need for adoption of
+                efficient Point of Sale (POS) systems to improve operational efficiency, enhance customer satisfaction,
+                and
+                drive business growth and thus this project paper focuses on designing and developing a modern POS
+                system
+                adapted to meet the evolving needs of retail businesses in this digital era. It will cover critical
+                aspects such
+                as system requirements, user interface (UI) design, transaction processing, inventory control management
+                and
+                reporting features and integration capabilities with other systems. </p>
+
+            <p> Key topics to be discussed include the importance of intuitive user-design interfaces, the impact of
+                real-time
+                data analytics on decision-making, inventory-management strategies, features and functionalities of
+                modern POS
+                systems. The system also needs to be flexible and adapt faster given the unknown emerging issues that
+                occur.
+                Thus, the system has to respond to this fast and quickly otherwise it would be rendered useless.</p>
+
+            <h3> Review of objectives</h3>
+
+            <p>Objective 1 - Design and create an intuitive and user-friendly POS system:</p>
+
+            <p>This aim is clear and specific, focusing on the development of a user-friendly POS system accessible
+                through web
+                browsers. It emphasizes ease of use for small-scale business owners and their staff, which aligns with
+                the
+                overarching goal of enhancing operational efficiency.</p>
+
+            <p>Objective 2 - Implement features to automate and streamline sales transactions:</p>
+
+            <p>This intention addresses the need to reduce processing times and minimize errors associated with manual
+                transaction recording, which is crucial for improving efficiency.</p>
+
+            <p>It highlights the importance of automation in enhancing the functionality of the POS system.</p>
+
+            <p>Objective 3 - Integrate robust inventory management functionalities:</p>
+
+            <p>This objective aims to address inventory-related challenges by tracking product availability, managing
+                stock
+                levels, and preventing issues like stock-outs and overstocking.</p>
+
+            <p>It underscores the significance of inventory management in optimizing business operations.</p>
+
+            <p>Objective 4 - Implement error-checking mechanisms and validation processes:</p>
+
+            <p>This end focuses on enhancing the accuracy of sales and inventory data, which is essential for reliable
+                business
+                insights and decision-making.</p>
+
+            <p>It emphasizes the importance of data integrity within the POS system.</p>
+
+            <p>Objective 5 - Develop comprehensive reporting tools:</p>
+
+            <p>This target seeks to provide valuable insights into sales trends, inventory turnover, and customer
+                behavior,
+                supporting informed decision-making.</p>
+
+            <p>It highlights the importance of data analysis in driving business growth.</p>
+
+            <p>Objective 6 - Optimize system performance for efficient transaction processing:</p>
+
+            <p>This ambition emphasizes the importance of system performance in enhancing the customer experience and
+                satisfaction.</p>
+
+            <p>It underscores the need for quick and efficient transaction processing.</p>
+
+            <p>Objective 7 - Design the POS system to be cost-effective and scalable:</p>
+
+            <p>This aim considers the financial constraints of small-scale businesses and the need for scalability to
+                accommodate future growth.</p>
+
+            <p>It aligns with the goal of making the POS system accessible and sustainable for small businesses.</p>
+
+            <p>Objective 8 - Develop training materials and provide hands-on training:</p>
+
+            <p>This objective addresses the importance of training and support for effective utilization of the POS
+                system.</p>
+
+            <p>It emphasizes the need for ongoing support to address user queries and issues.</p>
+
+            <p>Objective 9 - Assess the impact of the implemented POS system:</p>
+
+            <p>This purpose focuses on evaluating the effectiveness of the POS system in improving efficiency, accuracy,
+                and
+                customer satisfaction.</p>
+
+            <p>It emphasizes the importance of feedback and continuous improvement.</p>
+
+            <p>Objective 10 - Ensure positive contribution to business growth and competitiveness:</p>
+
+            <p>This objective underscores the overarching goal of the project, which is to support the growth,
+                sustainability,
+                and competitiveness of small-scale businesses.</p>
+
+            <p>It aligns with the broader impact objectives of the project.</p>
+
+            <p>Objective 11 - Ensure concurrent usage and efficient service delivery:</p>
+
+            <p>This objective highlights the importance of system scalability and reliability, especially during peak
+                usage
+                periods.</p>
+
+            <p>It emphasizes the need for seamless service delivery to maintain customer satisfaction.</p>
+
+            <p>Objective 12 - Flexibility and adaptability</p>
+
+            <p>This objective highlight how new emerging issues require the system to cope with at a faster pace. Given
+                the
+                emerging trends and also needs in the business and technological sector the POS system should quickly
+                respond to
+                this by updates. Given this series of new updates the system should cope up and work efficiently without
+                any
+                unnecessary technical errors.</p>
+
+            <div><img></div>
+
+            <p>Figure 1:concept diagram</p>
+
+            <footer>
+                <p>3</p>
+
+            </footer>
+            <p>CHAPTER THREE</p>
+
+            <p>Research Methodology</p>
+
+            <p>Qualitative Research Methods:</p>
+
+            <p>Interviews:</p>
+
+            <p> Conducting interviews with small-scale business owners, managers, and employees allows researchers to
+                explore
+                their experiences, preferences, and needs related to inventory management and POS systems in-depth. This
+                qualitative approach provides rich, detailed insights into participants' perspectives.</p>
+
+            <p>Observations:</p>
+
+            <p> Engaging in firsthand observations of day-to-day operations, customer interactions, and inventory
+                management
+                practices provides researchers with a contextual understanding of small-scale businesses. This method
+                allows for
+                the observation of behaviors and practices that may not be fully captured through other research
+                methods.</p>
+
+            <p>Narrative Analysis:</p>
+
+            <p> Employing narrative analysis techniques, researchers can explore the stories and narratives shared by
+                small-scale business owners and employees regarding their encounters with inventory management and POS
+                systems.
+                This approach focuses on comprehending the meaning and significance of these narratives within their
+                broader
+                context.</p>
+
+            <p>Quantitative Research Methods:</p>
+
+            <p>Surveys: </p>
+
+            <p>Distributing surveys to small-scale business owners and employees enables researchers to gather
+                quantitative data
+                on inventory management practices, challenges faced, and desired features in a POS system. Surveys
+                provide
+                standardized responses that can be analyzed statistically to identify trends and patterns.</p>
+
+            <p>Review of Business Records:</p>
+
+            <p> Analyzing existing documentation such as inventory reports, sales data, and customer feedback offers
+                quantitative insights into current inventory management practices and business performance metrics.</p>
+
+            <p>Case Studies:</p>
+
+            <p>Conducting case studies of small-scale businesses that have successfully implemented POS systems for
+                inventory
+                management allows researchers to examine real-world examples in detail. Case studies provide valuable
+                qualitative insights into the implementation process, challenges faced, and outcomes achieved.</p>
+
+            <p>Mixed-Methods Integration:</p>
+
+            <p>Integrating qualitative and quantitative data allows researchers to triangulate findings and validate
+                interpretations. Combining insights from interviews, observations, surveys, and case studies provides a
+                comprehensive understanding of small-scale businesses' inventory management needs and preferences.</p>
+
+            <p>Data collection methods used</p>
+
+            <p>Interviews: Conducting structured or semi-structured interviews with small-scale business owners,
+                managers, and
+                employees can provide qualitative insights into their experiences, preferences, and needs related to
+                inventory
+                management and POS systems.</p>
+
+            <p>Observations: Observations can be conducted in-person by observing day-to-day operations, interactions
+                with
+                customers, and inventory management practices</p>
+
+            <p>Case Studies: Conduct case studies of small-scale businesses that have successfully implemented POS
+                systems for
+                inventory management.</p>
+
+            <p>Surveys: Surveys can be distributed to small-scale business owners and employees to gather quantitative
+                data on
+                their current inventory management practices, challenges faced, and desired features in a POS system.
+            </p>
+
+            <p>Going through the Business' Records: Analyze existing documentation related to small-scale businesses'
+                inventory
+                management practices, such as inventory reports, sales data, and customer feedback.</p>
+
+            <p>Tools Used for The Data Collection</p>
+
+            <p>Surveys: This popular method allows you to reach a large number of businesses relatively quickly and
+                efficiently.
+                Design a survey instrument to gather data on: Specific pain points they experience with their current
+                transaction processes (e.g., time spent manually entering data, errors in transactions, difficulty
+                tracking
+                inventory)</p>
+
+            <p>Industry reports: Consult reports from business associations, economic think tanks, or research
+                institutions that
+                analyze trends and factors contributing to business failure within specific industries.</p>
+
+            <p>Social media listening: Track online conversations on platforms like Twitter or Reddit using tools like
+                Sprout
+                Social to understand public sentiment and emerging themes related to business struggles.</p>
+
+            <p>Financial analysis tools: Explore platforms like S&amp;P Global Market Intelligence or Moody's Analytics
+                for
+                financial data and ratios reflecting potential risk factors for business collapse.</p>
+
+            <p>Design Diagrams</p>
+
+            <div><img></div>
+
+            <p>Figure 2:Data Flow Diagram</p>
+
+            <div><img></div>
+
+            <p>Figure 3:Use case Diagram</p>
+
+            <div><img></div>
+
+            <p>Figure 4: Entity relation diagram</p>
+
+            <p>Research Ethics</p>
+
+            <p>I would remove any names, addresses, and other identifying information from data before analysis.</p>
+
+            <p>I would develop consent forms that are easy to understand and accessible to all participants.</p>
+
+            <p>Storing data securely and not sharing it with third parties without consent</p>
+
+            <p>Regularly reviewing my research methods and procedures to ensure that they are ethical and compliant with
+                regulations.</p>
+
+            <p>Involving different perspectives e.g. different team members in the research process</p>
+
+            <p>Assigning participants with unique identifiers to anonymize their data, and any identifying information
+                will be
+                removed or encrypted to protect their privacy.</p>
+
+            <p>Participants will be given sufficient time to review the information and ask any questions they may have
+                before
+                deciding whether to participate.</p>
+
+            <p>Participants will be informed that they have the right to withdraw from the study at any time without
+                penalty or
+                consequence.</p>
+
+            <p>Participants will be assured of their anonymity throughout the research process, meaning that their
+                identity will
+                not be disclosed in any way.</p>
+        </div>
     </div>
 
     <footer>

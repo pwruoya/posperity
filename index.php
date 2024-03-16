@@ -7,6 +7,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="home.css">
     <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
+    <script src="title.js"></script>
 </head>
 
 <body>
@@ -20,12 +21,21 @@
             ?>
         </h1>
         <div class="head">
-            <a href="logout.php">Logout</a>
+            <a href="logout.php">
+                <?php
+                // Check if "userid" session variable is set and not equal to 0
+                if (isset($_SESSION["userid"]) && $_SESSION["userid"] != 0) {
+                    echo 'log out';
+                } else {
+                    echo 'log in';
+                }
+                ?>
+            </a>
             <div class="menu">
                 <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                 <div id="hide" class="navbar-toggle">
                     <a class="bar" href="#">Home</a>
-                    <a class="bar" href="#">Make Sale</a>
+                    <a class="bar" href="makeSale.php">Make Sale</a>
                     <a class="bar" href="inventory.php">Inventory</a>
                     <a class="bar" href="#">Transactions</a>
                     <a class="bar" href="about.html">About</a>
@@ -35,7 +45,7 @@
             <nav class="nav" id="navbarLinks">
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Make Sale</a></li>
+                    <li><a href="makeSale.php">Make Sale</a></li>
                     <li><a href="inventory.php">Inventory</a></li>
                     <li><a href="#">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
@@ -65,15 +75,6 @@
             &copy; 2024 posperity,all rights reserved</p>
     </footer>
 </body>
-<script>
-    function toggleMenu() {
-        var navbarLinks = document.getElementById("hide");
-        if (navbarLinks.style.display === "flex") {
-            navbarLinks.style.display = "none";
-        } else {
-            navbarLinks.style.display = "flex";
-        }
-    }
-</script>
+
 
 </html>

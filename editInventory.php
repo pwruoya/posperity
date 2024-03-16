@@ -114,8 +114,8 @@ $conn->close();
                 <br>
                 <br>
                 <div class="spacebtn">
-                    <button type="button" onclick="toInventory()"><i class="fa-solid fa-angles-left" style="color: #ffffff;"></i></i></button>
-                    <input type="submit" value="Add Product">
+                    <button type="button" onclick="toInventory()"><i class="fa-solid fa-angles-left" style="color: #ffffff;"></i></button>
+                    <input type="submit" value="Update Product">
                 </div>
             <?php
             } else {
