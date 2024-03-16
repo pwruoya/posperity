@@ -1,0 +1,41 @@
+        .actionsBar {
+            height: 6vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 3vw;
+            padding-left: 3vw;
+        }
+
+        .searchBar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .searchInput {
+            margin-right: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .searchButton {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #0e1f3d;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .edit {
+            display: flex;
+            justify-content: end;
+        }
+
+        .selected {
+            border-color: #007bff;
+            background-color: rgba(14, 31, 61, 0.8);
+            /* Blue border for selected card */
+        }

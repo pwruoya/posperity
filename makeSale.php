@@ -17,7 +17,7 @@
             <?php
             session_start();
             if (isset($_SESSION['merchantname'])) {
-                echo "{$_SESSION['merchantname']} Inventory";
+                echo "{$_SESSION['merchantname']} Sales";
             }
             ?>
         </h1>
@@ -37,7 +37,7 @@
                 <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                 <div id="hide" class="navbar-toggle">
                     <a class="bar" href="index.php">Home</a>
-                    <a class="bar" href="makeSale.php">Make Sale</a>
+                    <a class="bar" href="#">Make Sale</a>
                     <a class="bar" href="inventory.php">Inventory</a>
                     <a class="bar" href="#">Transactions</a>
                     <a class="bar" href="about.html">About</a>
@@ -47,7 +47,7 @@
             <nav class="nav" id="navbarLinks">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="makeSale.php">Make Sale</a></li>
+                    <li><a href="#">Make Sale</a></li>
                     <li><a href="inventory.php">Inventory</a></li>
                     <li><a href="#">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
@@ -61,7 +61,7 @@
         <div>
             <div class="actionsBar">
                 <div>
-                    <button class="button" onclick="toAdd()">Add items</button>
+                    <button class="button" id="nextButton">Preview Selection</button>
                 </div>
                 <div>
                     <div class="searchBar">
@@ -104,23 +104,22 @@
                     // Output data of each row
                     while ($row = $result->fetch_assoc()) {
                         $prod = strval($row["product_id"]);
-                        echo "<div class='card' style='color:white;'>";
+                        $quantity = $row["quantity"];
+                        echo "<div class='card' style='color:white;' data-productid='$prod' data-quantity='$quantity'>";
                         echo "<img src='" . $row["img_url"] . "' alt='Product Image'>";
                         echo "<div class='card-content'>";
                         echo "<h4>" . $row["name"] . "</h4>";
                         echo "<p>" . $row["description"] . "</p>";
                         echo "<p>Ksh. " . $row["price"] . "</p>";
-                        $quantity = $row["quantity"];
 
-                        // Check if quantity is less than zero
+                        // Check if quantity is less than or equal to zero
                         if ($quantity <= 0) {
-                            // If quantity is negative, echo "Out of stock" in red
+                            // If quantity is zero or negative, echo "Out of stock" in red
                             echo '<p style="color: red;">Out of stock</p>';
                         } else {
                             // Otherwise, echo the quantity as normal
-                            echo "<p>stock: $quantity</p>";
+                            echo "<p>Stock: $quantity</p>";
                         }
-                        echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div>';
 
                         echo "</div>";
                         echo "</div>";
@@ -172,6 +171,52 @@
         // Redirect to another page (replace 'page-url' with the actual URL)
         window.location.href = 'add_product.php';
     }
+</script>
+<!-- JavaScript code -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const selectedProducts = []; // Array to store selected product IDs
+
+        // Add event listener to each card
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                const productId = card.getAttribute('data-productid'); // Get product ID
+                const quantity = parseInt(card.getAttribute('data-quantity')); // Get quantity as integer
+
+                // Check if quantity is greater than zero
+                if (quantity > 0) {
+                    const index = selectedProducts.indexOf(productId); // Check if product ID is in the array
+
+                    // Toggle selection state
+                    if (index === -1) {
+                        // Product not selected, add to selectedProducts array
+                        selectedProducts.push(productId);
+                        card.classList.add('selected'); // Add selected class for styling
+                        console.log('Product selected:', productId);
+                    } else {
+                        // Product already selected, remove from selectedProducts array
+                        selectedProducts.splice(index, 1);
+                        card.classList.remove('selected'); // Remove selected class
+                        console.log('Product deselected:', productId);
+                    }
+
+                    console.log('Selected products:', selectedProducts); // Log selected products array
+                } else {
+                    console.error('Product is out of stock:', productId);
+                }
+            });
+        });
+        // Event listener for next page navigation
+        document.getElementById('nextButton').addEventListener('click', () => {
+            // Pass selected product IDs to the next page using query string
+            if (selectedProducts.length > 0) {
+                const queryString = `?selected_products=${selectedProducts.join(',')}`;
+                window.location.href = 'salesPreview.php' + queryString;
+            } else {
+                console.error('No products selected.');
+            }
+        });
+    });
 </script>
 
 </html>
