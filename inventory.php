@@ -39,7 +39,7 @@
                     <a class="bar" href="index.php">Home</a>
                     <a class="bar" href="makeSale.php">Make Sale</a>
                     <a class="bar" href="inventory.php">Inventory</a>
-                    <a class="bar" href="#">Transactions</a>
+                    <a class="bar" href="transactions.php">Transactions</a>
                     <a class="bar" href="about.html">About</a>
                     <a class="bar" href="services.html">Services</a>
                 </div>
@@ -49,7 +49,7 @@
                     <li><a href="index.php">Home</a></li>
                     <li><a href="makeSale.php">Make Sale</a></li>
                     <li><a href="inventory.php">Inventory</a></li>
-                    <li><a href="#">Transactions</a></li>
+                    <li><a href="transactions.php">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                 </ul>

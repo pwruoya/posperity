@@ -42,6 +42,9 @@
             display: flex;
             justify-content: space-around;
         }
+        body{
+            min-width: 405px;
+        }
     </style>
 </head>
 
