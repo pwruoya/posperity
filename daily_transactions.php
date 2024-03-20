@@ -152,12 +152,15 @@ if (isset($_GET['date'])) {
                     // Output cards for each transaction
                     while ($row = $result->fetch_assoc()) {
                 ?>
-                        <div class="sold_prod">
+                        <div class="sold_prod" data-saleid="<?php echo htmlspecialchars($row['sale_id']); ?>">
                             <div class="nameTime">
                                 <div class="tname">
                                     <?php echo htmlspecialchars($row['name']); ?>
+                                    <i><?php echo htmlspecialchars($row['sale_id']); ?></i>
                                 </div>
-                                <div><?php echo date('H:i', strtotime($row['Timestamp'])); ?></div>
+                                <div>
+                                    <?php echo date('H:i', strtotime($row['Timestamp'])); ?>
+                                </div>
                             </div>
                             <div class="price">
                                 <div><?php
@@ -167,9 +170,10 @@ if (isset($_GET['date'])) {
                                             echo "@(" . $row['price'] . "-" . $row['discount'] . ")";
                                         }
                                         ?></div>
-                                <div><?php echo "<i>Ksh</i> <b>".$row['selling_price']."</b>"; ?></div>
+                                <div><?php echo "<i>Ksh</i> <b>" . $row['selling_price'] . "</b>"; ?></div>
                             </div>
                         </div>
+
             <?php
                     }
                 } else {
@@ -192,139 +196,16 @@ if (isset($_GET['date'])) {
                 &copy; 2024 posperity,all rights reserved</p>
         </footer>
     </body>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const soldProds = document.querySelectorAll('.sold_prod');
+            soldProds.forEach(soldProd => {
+                soldProd.addEventListener('click', () => {
+                    const saleId = soldProd.getAttribute('data-saleid');
+                    window.location.href = 'one_transaction.php?sale_id=' + saleId;
+                });
+            });
+        });
+    </script>
 
     </html>
-
-
-
-    <!-- <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Daily Transactions</title>
-        <style>
-            table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            th,
-            td {
-                border: 1px solid black;
-                padding: 8px;
-                text-align: left;
-            }
-
-            .sold_prod {
-                display: flex;
-                padding: 2vw;
-                justify-content: space-between;
-            }
-
-            .price div {
-                text-align: right;
-            }
-
-            @media screen and (max-width: 600px) {
-                .sold_prod {
-                    flex-direction: column;
-                }
-            }
-        </style>
-    </head>
-
-    <body>
-        <h1>Daily Transactions</h1>
-
-        <?php
-        session_start();
-        // Check if the date parameter is set
-        if (isset($_GET['date'])) {
-            // Sanitize the date parameter
-            $date = htmlspecialchars($_GET['date']);
-
-            // Database connection parameters
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "posperity"; // Replace 'your_database_name' with your actual database name
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Prepare SQL statement to fetch transactions for the given date
-            $query = "SELECT s.sale_id, s.product_id, p.name, s.Timestamp, s.quantity, s.price, s.discount, s.selling_price, s.payment_method, s.user
-              FROM sale s
-              JOIN product p ON s.product_id = p.product_id
-              WHERE s.merchant = ? AND DATE(s.Timestamp) = ?";
-
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("is", $_SESSION['merchantid'], $date);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            // Check if there are any transactions for the given date
-            if ($result->num_rows > 0) {
-                // Output cards for each transaction
-                while ($row = $result->fetch_assoc()) {
-        ?>
-                    <div class="sold_prod">
-                        <div class="nameTime">
-                            <div><?php echo htmlspecialchars($row['name']); ?></div>
-                            <div><?php echo date('H:i', strtotime($row['Timestamp'])); ?></div>
-                        </div>
-                        <div class="price">
-                            <div><?php
-                                    if ($row['discount'] === 0) {
-                                        echo "@" . $row['price'];
-                                    } else {
-                                        echo "@(" . $row['price'] . "-" . $row['discount'] . ")";
-                                    }
-                                    ?></div>
-                            <div><?php echo $row['selling_price']; ?></div>
-                        </div>
-                    </div>
-        <?php
-                }
-            } else {
-                echo '<p>No transactions found for the selected date.</p>';
-            }
-
-            // Close statement and connection
-            $stmt->close();
-            $conn->close();
-        } else {
-            // Date parameter not set
-            echo '<p>Error: Date parameter not provided.</p>';
-        }
-        ?>
-
-        <div class="sold_prod">
-            <div class="nameTime">
-                <div>
-                    product name
-                </div>
-                <div>
-                    time
-                </div>
-            </div>
-            <div class="price">
-                <div>
-                    price - discount
-                </div>
-                <div>
-                    selling price
-                </div>
-            </div>
-        </div>
-    </body>
-
-    </html> -->
