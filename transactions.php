@@ -165,8 +165,8 @@ while ($row = $result->fetch_assoc()) {
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         /* Add box shadow for elevation */
-        padding: 20px;
-        margin: 20px;
+        padding: 2px;
+        margin: 5px;
     }
 </style>
 
@@ -218,7 +218,7 @@ while ($row = $result->fetch_assoc()) {
         <div class="main-content" id="div2">
             <div class="elevate">
                 <h2>Grand Total</h2>
-                <h2><?php echo 'Ksh ' . number_format($grandTotal, 2); ?></h2>
+                <h3><?php echo 'Ksh ' . number_format($grandTotal, 2); ?></h3>
                 <div id="day"></div>
             </div>
             <div class="trans_button">
@@ -359,11 +359,13 @@ while ($row = $result->fetch_assoc()) {
             const dayBtns = daily.querySelectorAll('.dtrans_button');
             dayBtns.forEach(dayBtn => {
                 dayBtn.addEventListener('click', () => {
-                    const date = dayBtn.getAttribute('data-date'); 
-                    document.getElementById('day').textContent = date;
+                    const date = dayBtn.getAttribute('data-date'); // Assuming you have a data-date attribute on your button
+                    const url = 'daily_transactions.php?date=' + encodeURIComponent(date);
+                    window.location.href = url;
                 });
             });
         });
+
 
     });
 </script>
