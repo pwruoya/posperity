@@ -1,11 +1,5 @@
 <?php
 include "mail.php";
-
-?>
-<?php
-
-?>
-<?php
 $resetToken = generateResetToken();
 $reset = false;
 $rUID = "";
@@ -50,13 +44,24 @@ if ($receivedData != false) {
 
 function sendPasswordResetEmail($email, $resetToken)
 {
+    // Get the current page's protocol (http or https)
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+
+    // Get the host (localhost or domain name)
+    $host = $_SERVER['HTTP_HOST'];
+
+    // Get the path and script name (e.g., /project/example.php)
+    $path = $_SERVER['REQUEST_URI'];
+
+    // Construct the full URL
+    $rootDirectory = $protocol . '://' . $host . $path;
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $to_email = $email;
         $subject = "Reset Password";
         $body = '
         <p>Hello,</p>
         <p>You have requested to reset your password. Please click on the link below to reset your password:</p>
-        <p><a href="http://localhost/ds-practical/reset.php?data=' . $resetToken . '">Reset Password</a></p>
+        <p><a href=" ' . $rootDirectory . '?data=' . $resetToken . '">Reset Password</a></p>
         <p>If you did not request this, please ignore this email.</p>
         <p>Regards,<br>Distributed Assignment</p>
         ';
@@ -132,7 +137,7 @@ function sendPasswordResetEmail($email, $resetToken)
                     $email = $_POST['email'];
 
                     // Prepare the SQL statement with a parameter placeholder
-                    $sql = "SELECT `UID`, `Username` FROM users WHERE email = ?";
+                    $sql = "SELECT `user_id`, `user_name` FROM user WHERE email = ?";
                     $stmt = $conn->prepare($sql);
 
                     // Bind the parameter to the statement
@@ -149,8 +154,8 @@ function sendPasswordResetEmail($email, $resetToken)
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         // Access the values of UID and Username columns
-                        $rUID  = $row['UID'];
-                        $username = $row['Username'];
+                        $rUID  = $row['user_id'];
+                        $username = $row['user_name'];
 
                         // Values to insert or update
 
@@ -208,14 +213,14 @@ function sendPasswordResetEmail($email, $resetToken)
                             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
                             // SQL query with placeholders
-                            $sql = "UPDATE `users` SET `password` = ? WHERE `UID` = ?";
+                            $sql = "UPDATE `user` SET `password` = ? WHERE `user_id` = ?";
 
                             // Prepare and bind the statement
                             $stmt = $conn->prepare($sql);
                             $stmt->bind_param("ss", $password, $rUID);
 
                             // Prepare the SQL statement with a parameter placeholder
-                            $sql1 = "SELECT `email`, `Username` FROM users WHERE UID = ?";
+                            $sql1 = "SELECT `email`, `user_name` FROM user WHERE user_id = ?";
                             $stmt1 = $conn->prepare($sql1);
 
                             // Bind the parameter to the statement
@@ -232,7 +237,7 @@ function sendPasswordResetEmail($email, $resetToken)
                                 $row = $result1->fetch_assoc();
                                 // Access the values of UID and Username columns
                                 $email  = $row['email'];
-                                $username = $row['Username'];
+                                $username = $row['user_name'];
                                 error_log("User found" . $email);
                                 // Execute the statement
                                 if ($stmt->execute()) {
