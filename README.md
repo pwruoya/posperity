@@ -1,4 +1,6 @@
 # posperity
 Team project
 
-Once cloned install PHPMailer and firebase
+Once cloned:
+run `composer update`
+    `npm install firebase`
