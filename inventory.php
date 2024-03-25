@@ -118,7 +118,13 @@ session_start();
                         echo "</div>";
                     }
                 } else {
-                    echo "<tr><td colspan='7'>No data found</td></tr>";
+
+                    echo '<div id="maindiv">';
+                    echo '<div class="main-content" id="div2">';
+                    echo 'You have no prducts in your inventory';
+                    echo '<button class="button" onclick="toAdd()">Add new products</button>';
+                    echo '</div>';
+                    echo '</div>';
                 }
                 $conn->close();
                 ?>
