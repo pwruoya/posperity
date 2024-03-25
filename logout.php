@@ -3,17 +3,9 @@ include 'redisconnect.php';
 // Start the PHP session
 session_start();
 
-// Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    // Store session variables in Redis
-    $redis->set('username', $_SESSION['username']);
-    $redis->set('merchantname', $_SESSION['merchantname']);
-    $redis->set('merchantid', $_SESSION['merchantid']);
-    $redis->set('userid', $_SESSION['userid']);
-}
 
 // Handle logout
-if (isset($_GET['logout'])) {
+if ($redis->exists('merchantname')) {
     // Remove session variables from Redis
     $redis->del('username', 'merchantname', 'merchantid', 'userid');
     // Clear all session variables
