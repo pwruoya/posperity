@@ -23,7 +23,7 @@ session_start();
             <?php
             session_start();
             if ($redis->exists('merchantname')) {
-                $redis->get('merchantname');
+                echo $redis->get('merchantname');
             } else {
                 echo '<script>window.location.href = "login.php"</script>';
             }
