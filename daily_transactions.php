@@ -91,8 +91,8 @@ if (isset($_GET['date'])) {
         <header>
             <h1>
                 <?php
-                if (isset($_SESSION['merchantname'])) {
-                    echo $_SESSION['merchantname'];
+                if ($redis->exists('merchantname')) {
+                    echo $redis->get('merchantname');
                 }
                 ?>
             </h1>

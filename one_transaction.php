@@ -1,3 +1,10 @@
+<?php
+include "redisconnect.php";
+// Start session
+session_start();
+
+// Close Redis connection (Predis automatically handles connections, so no explicit close is needed)
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,9 +71,8 @@
     <header>
         <h1>
             <?php
-            session_start();
-            if (isset($_SESSION['merchantname'])) {
-                echo $_SESSION['merchantname'];
+            if ($redis->exists('merchantname')) {
+                echo $redis->get('merchantname');
             }
             ?>
         </h1>

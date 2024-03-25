@@ -166,8 +166,8 @@ while ($row = $result->fetch_assoc()) {
     <header>
         <h1>
             <?php
-            if (isset($_SESSION['merchantname'])) {
-                echo "{$_SESSION['merchantname']} transactions";
+            if ($redis->exists('merchantname')) {
+                echo "{$redis->get('merchantname')} transactions";
             }
             ?>
         </h1>
