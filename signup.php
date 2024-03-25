@@ -127,7 +127,7 @@ include "mail.php";
                                         $row = $result->fetch_assoc();
                                         $mid  = $row['mid'];
                                         // SQL query with placeholders
-                                        $sql = "INSERT INTO `user`( `user_name`, `password`, `merchant`, `email`, `fullname`, `address`, `mobile`) VALUES (?,?,?,?,?,?,?)";
+                                        $sql = "INSERT INTO `user`( `user_name`, `password`, `merchant_id`, `email`, `fullname`, `address`, `mobile`) VALUES (?,?,?,?,?,?,?)";
                                         // Prepare and bind the statement
                                         $stmt = $conn->prepare($sql);
                                         $stmt->bind_param("sssssss", $username, $hashedPassword, $mid, $email, $name, $address, $mobile);
@@ -164,10 +164,10 @@ include "mail.php";
                                         } else {
                                             echo "Error: " . $sql . "<br>" . $conn->error;
                                         }
-                                    }else{
+                                    } else {
                                         echo "merchant does not exist";
                                     }
-                                }else{
+                                } else {
                                     echo "Error: " . $sql . "<br>" . $conn->error;
                                 }
                                 // Close statement and connection

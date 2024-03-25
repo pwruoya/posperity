@@ -53,8 +53,8 @@
                     $userInput = $_POST["username"];
 
                     // Prepare SQL statement
-                    $sql = "SELECT u.user_id, u.user_name, u.password, u.merchant, u.email, u.fullname, u.address, u.mobile,m.merchantname 
-                        FROM user u LEFT JOIN merchant m ON u.merchant = m.mid WHERE u.user_name = ? OR u.email = ?";
+                    $sql = "SELECT u.user_id, u.user_name, u.password, u.merchant_id, u.email, u.fullname, u.address, u.mobile,m.merchantname 
+                        FROM user u LEFT JOIN merchant m ON u.merchant_id = m.mid WHERE u.user_name = ? OR u.email = ?";
                     $stmt = $conn->prepare($sql);
 
                     // Bind the parameter to the statement
