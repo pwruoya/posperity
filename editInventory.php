@@ -157,7 +157,7 @@ $conn->close();
                 if ($stmt->execute()) {
                     echo "Product updated successfully.";
                     // You can redirect the user to another page if needed
-                    header("Location: inventory.php");
+                    echo '<script>window.location.href = "inventory.php"</script>';
                     // exit();
                 } else {
                     echo "Error updating product: " . $stmt->error;

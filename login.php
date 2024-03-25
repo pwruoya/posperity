@@ -105,7 +105,7 @@ session_start();
 
 
                             // Redirect to the home page
-                            header("Location: index.php");
+                            echo '<script>window.location.href = "index.php"</script>';
                             exit();
                         } else {
                             // Redirect back to the login page with an error message

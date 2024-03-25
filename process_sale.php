@@ -154,7 +154,7 @@
                 }
             } else {
                 // Redirect to the homepage or error page if the form was not submitted properly
-                header("Location: index.php");
+                echo '<script>window.location.href = "index.php"</script>';
                 exit();
             }
             ?>

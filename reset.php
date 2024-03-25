@@ -187,7 +187,7 @@ function sendPasswordResetEmail($email, $resetToken)
                         $stmt_check->close();
                         if (isset($stmt_update)) $stmt_update->close();
                         if (isset($stmt_insert)) $stmt_insert->close();
-                        header("location: sent.html");
+                        echo '<script>window.location.href = "sent.html"</script>';
                     } else {
                         echo "No account with this email.";
                         $receivedData = 2;
@@ -262,7 +262,7 @@ function sendPasswordResetEmail($email, $resetToken)
                             }
                             // Close statement and connection
                             $stmt->close();
-                            header("location:login.php");
+                            echo '<script>window.location.href = "login.php"</script>';
                         } else {
                             echo "passwords do not match";
                         }
