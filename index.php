@@ -22,21 +22,14 @@ session_start();
         <h1>
             <?php
             session_start();
-            if ($redis->get('merchantname') != null) {
-                echo $redis->get('merchantname');
+            if ($redis->exists('merchantname')) {
+                $redis->get('merchantname');
             }
             ?>
         </h1>
         <div class="head">
             <a href="logout.php">
-                <?php
-                // Check if "userid" session variable is set and not equal to 0
-                if (isset($_SESSION["userid"]) && $_SESSION["userid"] != 0) {
-                    echo 'log out';
-                } else {
-                    echo 'log in';
-                }
-                ?>
+                log out
             </a>
             <div class="menu">
                 <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
