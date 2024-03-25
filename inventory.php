@@ -14,6 +14,7 @@ session_start();
     <title>Inventory</title>
     <link rel="stylesheet" href="home.css">
     <link rel="stylesheet" href="listItems.css">
+    <script src="title.js"></script>
     <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
 </head>
 
@@ -28,17 +29,7 @@ session_start();
             ?>
         </h1>
         <div class="head">
-            <a href="logout.php">
-                <?php
-                // Check if "userid" session variable is set and not equal to 0
-                if (isset($_SESSION["userid"]) && $_SESSION["userid"] != 0) {
-                    echo 'log out';
-                } else {
-                    echo 'log in';
-                }
-                ?>
 
-            </a>
             <div class="menu">
                 <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                 <div id="hide" class="navbar-toggle">
@@ -48,6 +39,7 @@ session_start();
                     <a class="bar" href="transactions.php">Transactions</a>
                     <a class="bar" href="about.html">About</a>
                     <a class="bar" href="services.html">Services</a>
+                    <a class="bar" href="logout.php">Log out</a>
                 </div>
             </div>
             <nav class="nav" id="navbarLinks">
@@ -58,8 +50,10 @@ session_start();
                     <li><a href="transactions.php">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
+                    <li><a href="logout.php"><i class="fa-regular fa-user" style="color: #ffffff;"></i> log out</a></li>
                 </ul>
             </nav>
+
         </div>
     </header>
 

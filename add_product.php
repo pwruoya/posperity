@@ -29,6 +29,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Item</title>
     <link rel="stylesheet" href="add.css">
+    <script src="title.js"></script>
     <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
     <!-- <script type="module" src="upload_image.js"></script> -->
 

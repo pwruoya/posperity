@@ -7,6 +7,8 @@
     <title>Developer Profile</title>
     <link rel="stylesheet" href="sign.css">
     <link rel="stylesheet" href="home.css">
+    <script src="title.js"></script>
+    <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
 </head>
 <style>
     .nav {
@@ -15,17 +17,35 @@
 </style>
 
 <body>
+
     <header>
         <h1>Developer Profile</h1>
-        <nav class="nav">
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="TeamDoc/about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-        </nav>
+        <div class="head">
+
+            <div class="menu">
+                <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
+                <div id="hide" class="navbar-toggle">
+                    <a class="bar" href="index.php">Home</a>
+                    <a class="bar" href="makeSale.php">Make Sale</a>
+                    <a class="bar" href="inventory.php">Inventory</a>
+                    <a class="bar" href="transactions.php">Transactions</a>
+                    <a class="bar" href="about.html">About</a>
+                    <a class="bar" href="services.html">Services</a>
+                    <a class="bar" href="logout.php">Log out</a>
+                </div>
+            </div>
+            <nav class="nav" id="navbarLinks">
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="makeSale.php">Make Sale</a></li>
+                    <li><a href="inventory.php">Inventory</a></li>
+                    <li><a href="transactions.php">Transactions</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="logout.php"><i class="fa-regular fa-user" style="color: #ffffff;"></i> log out</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
     <div class="profile">
         <div class="profile-picture">
@@ -37,7 +57,8 @@
             <p>Eldoret, Kenya</p>
             <p>HTML, CSS, JavaScript, Python,PHP</p>
             <p>2+ years</p>
-            <p><a href="https://github.com/ketertitus" target="_blank"><img src="assets\github.png" alt="GitHub Link"></a>
+            <p><a href="https://github.com/ketertitus" target="_blank"><img src="assets\github.png"
+                        alt="GitHub Link"></a>
             </p>
         </div>
     </div>
