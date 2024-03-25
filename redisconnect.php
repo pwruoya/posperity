@@ -18,7 +18,7 @@ $redis = new Client([
 // Test the connection
 try {
     $redis->ping(); // Ping the Redis server to check connectivity
-    echo "Connected to Redis successfully!";
+    // echo "Connected to Redis successfully!";
 } catch (Exception $e) {
     echo "Error connecting to Redis: " . $e->getMessage();
 }
