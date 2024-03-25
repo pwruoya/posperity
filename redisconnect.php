@@ -12,6 +12,7 @@ $redis = new Client([
     'scheme' => 'tcp',
     'host'   => $redisHost,
     'port'   => $redisPort,
+    'password' => '8gFHmu3qSKSuUykRBIF7ont40rwn3nXYQAzCaFpzpUo=',
 ]);
 
 // Test the connection
