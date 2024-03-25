@@ -52,8 +52,9 @@ session_start();
         }
 
         body {
-            min-width: 405px;
+            background-image: none;
         }
+
     </style>
 </head>
 

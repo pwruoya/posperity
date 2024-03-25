@@ -18,7 +18,11 @@ session_start();
     <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
 </head>
 
-
+<style>
+    body{
+        background-image: none;
+    }
+</style>
 <body>
     <header>
         <h1>
