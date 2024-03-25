@@ -21,10 +21,10 @@ if (isset($_GET['date'])) {
     }
 
     // Prepare SQL statement to fetch transactions for the given date
-    $query = "SELECT s.sale_id, s.product_id, p.name, s.Timestamp, s.quantity, s.price, s.discount, s.selling_price, s.payment_method, s.user
+    $query = "SELECT s.sale_id, s.product_id, p.name, s.Timestamp, s.quantity, s.price, s.discount, s.selling_price, s.payment_method, s.user_id
               FROM sale s
               JOIN product p ON s.product_id = p.product_id
-              WHERE s.merchant = ? AND DATE(s.Timestamp) = ?";
+              WHERE s.merchant_id = ? AND DATE(s.Timestamp) = ?";
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param("is", $_SESSION['merchantid'], $date);

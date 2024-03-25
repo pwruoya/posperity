@@ -130,8 +130,8 @@
                 $query = "SELECT s.*, p.img_url ,p.name, p.description, p.price, p.quantity AS product_quantity, u.*, m.`merchantname` AS merchant_name, DATE_FORMAT(s.Timestamp, '%Y-%m-%d %H:%i:%s') AS formatted_timestamp 
           FROM `sale` s 
           INNER JOIN `product` p ON s.product_id = p.product_id 
-          INNER JOIN `user` u ON s.user = u.user_id 
-          INNER JOIN `merchant` m ON s.merchant = m.`mid`
+          INNER JOIN `user` u ON s.user_id = u.user_id 
+          INNER JOIN `merchant` m ON s.merchant_id = m.`mid`
           WHERE s.`sale_id` = ?";
 
                 $stmt = $conn->prepare($query);

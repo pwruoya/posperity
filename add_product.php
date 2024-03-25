@@ -118,7 +118,7 @@ $conn->close();
                 }
 
                 // Prepare and bind parameters for the SQL statement
-                $sql = "INSERT INTO product (name, description, price, quantity, img_url, user, merchant) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
 
@@ -330,7 +330,7 @@ $conn->close();
 
 
 
-    var prod_name = "<?php echo $_SESSION['lastProductId']+1; ?>";
+    var prod_name = "<?php echo $_SESSION['lastProductId'] + 1; ?>";
     const storageRef = ref(storage, 'images/' + prod_name + '.txt'); // Specify the file path or name in Firebase Storage
     const localStorageKey = 'capturedImage'; // Key used to store the file data in Local Storage
     const targetElementId = 'img_url'; // ID of the target element to set the download URL
