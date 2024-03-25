@@ -96,39 +96,35 @@ $conn->close();
 
                 // Additional sanitization and validation can be added here
 
-                // Connect to your database
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "posperity";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Prepare and bind parameters for the SQL statement
-                $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
-
+                include 'dbconfig.php';
 
                 // Example user and merchant values (adjust as needed)
-                $user = $_SESSION['userid'];;
-                $merchant = $_SESSION['merchantid']; // Assuming you store the merchant ID in a session variable
+                if (isset($_SESSION['merchantid'])) {
+                    $user = $_SESSION['userid'];
+                    $merchant = $_SESSION['merchantid'];
 
-                // Execute the SQL statement
-                if ($stmt->execute()) {
-                    echo "Item added successfully.";
-                    // You can redirect the user to another page if needed
-                    // header("Location: inventory.php");
-                    // exit();
+                    // Prepare and bind parameters for the SQL statement
+                    $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
+
+
+
+                    // Execute the SQL statement
+                    if ($stmt->execute()) {
+                        echo "Item added successfully.";
+                        // You can redirect the user to another page if needed
+                        // header("Location: inventory.php");
+                        // exit();
+                    } else {
+                        echo "Error adding item: " . $stmt->error;
+                    }
+
+                    // Close the statement and connection
+                    $stmt->close();
                 } else {
-                    echo "Error adding item: " . $stmt->error;
+                    echo 'mid empty';
                 }
-
-                // Close the statement and connection
-                $stmt->close();
                 $conn->close();
             } else {
                 echo "All fields are required.";

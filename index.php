@@ -61,6 +61,7 @@
             if (isset($_SESSION['username'])) {
                 // Display user details if logged in
                 echo "<h2>Welcome, " . $_SESSION['username'] . "</h2>";
+                // echo "<h2>Welcome, " . $_SESSION['merchantid'] . "</h2>";
                 echo "<div class='profile-image'><img src='assets\profile.png' alt='Profile Image'></div>";
             } else {
                 // Display login button if not logged in

@@ -61,7 +61,7 @@
                         $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
                         $mname = $row['merchantname'];
-                        $merid = $row['merchant'];
+                        $merid = $row['merchant_id'];
 
 
                         // Password entered by the user during login
