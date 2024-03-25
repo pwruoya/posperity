@@ -3,17 +3,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $_SESSION['selectedId'] = $_GET['product_id'];
 }
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "posperity";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'dbconfig.php';
 
 // Prepare and bind the SQL query with a placeholder for the ID
 $sql = "SELECT `product_id`, `name`, `description`, `price`, `quantity`, `img_url`, `user_id`, `merchant_id` FROM `product` WHERE `product_id` = ?";

@@ -7,18 +7,7 @@ if (isset($_GET['date'])) {
     $ldate = date('F j, Y', strtotime($_GET['date']));
 
     // Database connection parameters
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "posperity"; // Replace 'your_database_name' with your actual database name
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    include 'dbconfig.php';
 
     // Prepare SQL statement to fetch transactions for the given date
     $query = "SELECT s.sale_id, s.product_id, p.name, s.Timestamp, s.quantity, s.price, s.discount, s.selling_price, s.payment_method, s.user_id
