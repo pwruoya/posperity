@@ -1,3 +1,10 @@
+<?php
+include "redisconnect.php";
+// Start session
+session_start();
+
+// Close Redis connection (Predis automatically handles connections, so no explicit close is needed)
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +22,6 @@
     <header>
         <h1>
             <?php
-            session_start();
             if (isset($_SESSION['merchantname'])) {
                 echo "{$_SESSION['merchantname']} Inventory";
             }
@@ -83,7 +89,7 @@
                 $stmt = $conn->prepare($sql);
 
                 // Bind the parameter to the statement
-                $stmt->bind_param("i", $_SESSION['merchantid']);
+                $stmt->bind_param("i", $redis->get('merchantid'));
 
                 // Execute the query
                 $stmt->execute();

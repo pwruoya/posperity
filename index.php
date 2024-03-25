@@ -63,7 +63,7 @@ session_start();
             if ($redis->exists('merchantname')) {
                 // Display user details if logged in
                 echo "<h2> " . $redis->get('username') . " </h2>";
-                // echo "<h2>Welcome, " . $_SESSION['merchantid'] . "</h2>";
+                // echo "<h2>Welcome, " . $redis->get('merchantid') . "</h2>";
                 echo "<div class='profile-image'><img src='assets\profile.png' alt='Profile Image'></div>";
             } else {
                 // Display login button if not logged in

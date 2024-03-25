@@ -1,5 +1,7 @@
 <?php
 session_start();
+include "redisconnect.php";
+
 // Check if the date parameter is set
 if (isset($_GET['date'])) {
     // Sanitize the date parameter
@@ -16,7 +18,7 @@ if (isset($_GET['date'])) {
               WHERE s.merchant_id = ? AND DATE(s.Timestamp) = ?";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("is", $_SESSION['merchantid'], $date);
+    $stmt->bind_param("is", $redis->get('merchantid'), $date);
     $stmt->execute();
     $result = $stmt->get_result();
 
