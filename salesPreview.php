@@ -1,5 +1,6 @@
 <?php
 include "redisconnect.php";
+include "dbconfig.php";
 // Start session
 session_start();
 
@@ -49,7 +50,8 @@ session_start();
             display: flex;
             justify-content: space-around;
         }
-        body{
+
+        body {
             min-width: 405px;
         }
     </style>
@@ -75,16 +77,6 @@ session_start();
             if (isset($_GET['selected_products'])) {
                 $selectedProducts = filter_input(INPUT_GET, 'selected_products', FILTER_SANITIZE_SPECIAL_CHARS);
                 $productIDs = explode(',', $selectedProducts);
-
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "posperity";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
 
                 $sql = "SELECT `product_id`, `name`, `price`, `quantity` FROM `product` WHERE `product_id` = ?";
                 $stmt = $conn->prepare($sql);
