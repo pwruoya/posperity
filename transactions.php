@@ -1,18 +1,7 @@
 <?php
 session_start();
 // Database connection parameters
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "posperity"; // Replace 'your_database_name' with your actual database name
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'dbconfig.php';
 
 // Query to fetch data grouped by year, month, week, and day
 $query = "SELECT YEAR(`Timestamp`) AS year, MONTH(`Timestamp`) AS month, WEEK(`Timestamp`, 1) AS week, DAY(`Timestamp`) AS day, SUM(selling_price) AS total FROM `sale` WHERE merchant_id = ? GROUP BY year, month, week, day";

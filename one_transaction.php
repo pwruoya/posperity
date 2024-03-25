@@ -109,18 +109,7 @@
         <div class="main-content" id="div2">
             <?php
             // Database connection parameters
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "posperity"; // Replace 'your_database' with your actual database name
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
+            include 'dbconfig.php';
 
             // Check if sale_id is passed via GET
             if (isset($_GET['sale_id'])) {

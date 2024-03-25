@@ -74,15 +74,7 @@
                 <!-- <button>::</button> -->
                 <?php
                 // Connect to your database
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "posperity";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+                include 'dbconfig.php';
 
                 // Fetch data from the database
                 $sql = "SELECT `product_id`, `name`, `description`, `price`, `quantity`, `img_url`,

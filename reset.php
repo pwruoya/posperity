@@ -1,15 +1,11 @@
 <?php
 include "mail.php";
+include 'dbconfig.php';
+session_start();
 $resetToken = generateResetToken();
 $reset = false;
 $rUID = "";
-// Create connection
-$conn = new mysqli($servername, $dbusername, $dbpassword, $database);
-session_start();
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+
 // Destination page (destination.php)
 $receivedData = isset($_GET['data']) ? urldecode($_GET['data']) : false; // Decode the URL parameter
 

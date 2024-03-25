@@ -1,5 +1,6 @@
 <?php
 include "mail.php";
+include 'dbconfig.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,14 +72,6 @@ include "mail.php";
                     if (is_string($name)) {
                         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-
-                            // Create connection
-                            $conn = new mysqli($servername, $dbusername, $dbpassword, $database);
-
-                            // Check connection
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
 
                             // Hash the password
                             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

@@ -1,16 +1,6 @@
 <?php
 session_start();
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "posperity";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'dbconfig.php';
 
 // Select the last inserted product ID from the product table
 $sql = "SELECT MAX(product_id) as last_product_id FROM product";
