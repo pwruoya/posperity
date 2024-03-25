@@ -227,4 +227,7 @@ tr {
         max-width: 100vw;
     }
 
+    .head{
+        justify-content: end;
+    }
 }
