@@ -24,6 +24,8 @@ session_start();
             session_start();
             if ($redis->exists('merchantname')) {
                 $redis->get('merchantname');
+            } else {
+                echo '<script>window.location.href = "login.php"</script>';
             }
             ?>
         </h1>
