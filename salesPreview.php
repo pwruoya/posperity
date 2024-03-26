@@ -50,11 +50,6 @@ session_start();
             display: flex;
             justify-content: space-around;
         }
-
-        body {
-            background-image: none;
-        }
-
     </style>
 </head>
 
