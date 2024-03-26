@@ -213,7 +213,8 @@ function sendPasswordResetEmail($email, $resetToken)
 
                             // Prepare and bind the statement
                             $stmt = $conn->prepare($sql);
-                            $stmt->bind_param("ss", $password, $rUID);
+                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                            $stmt->bind_param("ss", $hashedPassword, $rUID);
 
                             // Prepare the SQL statement with a parameter placeholder
                             $sql1 = "SELECT `email`, `user_name` FROM user WHERE user_id = ?";
