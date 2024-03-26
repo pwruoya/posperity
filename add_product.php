@@ -83,6 +83,7 @@ $conn->close();
         </form>
 
         <?php
+        include 'dbconfig.php';
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if all required fields are present
@@ -98,7 +99,6 @@ $conn->close();
 
                 // Additional sanitization and validation can be added here
 
-                include 'dbconfig.php';
 
                 // Example user and merchant values (adjust as needed)
                 if ($redis->exists('merchantid')) {

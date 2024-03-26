@@ -120,18 +120,7 @@ $conn->close();
 
 
         <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "posperity";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
+        include 'dbconfig.php';
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if all required fields are present
@@ -148,7 +137,7 @@ $conn->close();
                 // Additional sanitization and validation can be added here
 
                 // Prepare and bind parameters for the SQL statement to update product details
-                $sql = "UPDATE `product` SET `name`=?, `description`=?, `price`=?, `quantity`=?, `img_url`=?, `user_id`=?, `merchant`=? WHERE `product_id`=?";
+                $sql = "UPDATE `product` SET `name`=?, `description`=?, `price`=?, `quantity`=?, `img_url`=?, `user_id`=?, `merchant_id`=? WHERE `product_id`=?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ssdissii", $name, $description, $price, $quantity, $img_url, $user, $merchant, $productId);
 
