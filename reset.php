@@ -1,6 +1,6 @@
 <?php
 include "mail.php";
-include 'dbconfig.php';
+include "dbconfig.php";
 session_start();
 $resetToken = generateResetToken();
 $reset = false;
