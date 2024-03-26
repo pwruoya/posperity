@@ -13,9 +13,10 @@ if ($redis->exists('merchantname')) {
     // Destroy the session
     session_destroy();
     // Redirect to the login page or any other desired page
-    header("Location: login.php");
-    exit();
+
 }
+header("Location: login.php?logout=true");
+exit();
 ?>
 
 <!-- Your HTML content here -->
