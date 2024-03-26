@@ -200,10 +200,13 @@ $conn->close();
 
         // Function to open camera for picture capture
         function openCamera() {
-            // Access the user's camera
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
+            const constraints = {
+                video: {
+                    facingMode: 'environment'
+                } // Use the back camera
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
                 .then(stream => {
                     const videoElement = document.createElement('video');
                     videoElement.srcObject = stream;
