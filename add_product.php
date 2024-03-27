@@ -90,6 +90,10 @@ $conn->close();
             if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price']) && isset($_POST['quantity']) && isset($_POST['img_url'])) {
 
 
+                echo "<script>";
+                echo "alert('img:" . $_POST['img_url'] . "'";
+                echo "</script>";
+
                 // Sanitize inputs to prevent SQL injection
                 $name = htmlspecialchars($_POST['name']);
                 $description = htmlspecialchars($_POST['description']);
