@@ -1,3 +1,10 @@
+<?php
+include "redisconnect.php";
+// Start session
+session_start();
+
+// Close Redis connection (Predis automatically handles connections, so no explicit close is needed)
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,9 +24,8 @@
     <header>
         <h1>
             <?php
-            session_start();
-            if (isset($_SESSION['merchantname'])) {
-                echo "{$_SESSION['merchantname']} Invoice";
+            if ($redis->exists('merchantname')) {
+                echo "{$redis->get('merchantname')} Invoice";
             }
             ?>
         </h1>
@@ -76,8 +82,8 @@
                     $insertStmt->bind_param("iisddii", $productId, $merchantId, $quantity, $price, $discount, $sellingPrice, $userId);
 
                     // Get session variables
-                    $userId = $_SESSION['userid'];
-                    $merchantId = $_SESSION['merchantid'];
+                    $userId = $redis->get('userid');
+                    $merchantId = $redis->get('merchantid');
 
                     // Initialize arrays to store sale details
                     $productsSold = [];
@@ -154,7 +160,7 @@
                 }
             } else {
                 // Redirect to the homepage or error page if the form was not submitted properly
-                header("Location: index.php");
+                echo '<script>window.location.href = "index.php"</script>';
                 exit();
             }
             ?>

@@ -3,10 +3,13 @@ session_start();
 // Database connection parameters
 include 'dbconfig.php';
 
+include "redisconnect.php";
+
+
 // Query to fetch data grouped by year, month, week, and day
 $query = "SELECT YEAR(`Timestamp`) AS year, MONTH(`Timestamp`) AS month, WEEK(`Timestamp`, 1) AS week, DAY(`Timestamp`) AS day, SUM(selling_price) AS total FROM `sale` WHERE merchant_id = ? GROUP BY year, month, week, day";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $_SESSION['merchantid']);
+$stmt->bind_param("i", $redis->get('merchantid'));
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -163,31 +166,23 @@ while ($row = $result->fetch_assoc()) {
     <header>
         <h1>
             <?php
-            if (isset($_SESSION['merchantname'])) {
-                echo "{$_SESSION['merchantname']} transactions";
+            if ($redis->exists('merchantname')) {
+                echo "{$redis->get('merchantname')} transactions";
             }
             ?>
         </h1>
         <div class="head">
-            <a href="logout.php">
-                <?php
-                // Check if "userid" session variable is set and not equal to 0
-                if (isset($_SESSION["userid"]) && $_SESSION["userid"] != 0) {
-                    echo 'log out';
-                } else {
-                    echo 'log in';
-                }
-                ?>
-            </a>
+
             <div class="menu">
                 <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                 <div id="hide" class="navbar-toggle">
                     <a class="bar" href="index.php">Home</a>
                     <a class="bar" href="makeSale.php">Make Sale</a>
                     <a class="bar" href="inventory.php">Inventory</a>
-                    <a class="bar" href="#">Transactions</a>
+                    <a class="bar" href="transactions.php">Transactions</a>
                     <a class="bar" href="about.html">About</a>
                     <a class="bar" href="services.html">Services</a>
+                    <a class="bar" href="logout.php">Log out</a>
                 </div>
             </div>
             <nav class="nav" id="navbarLinks">
@@ -195,9 +190,10 @@ while ($row = $result->fetch_assoc()) {
                     <li><a href="index.php">Home</a></li>
                     <li><a href="makeSale.php">Make Sale</a></li>
                     <li><a href="inventory.php">Inventory</a></li>
-                    <li><a href="#">Transactions</a></li>
+                    <li><a href="transactions.php">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
+                    <li><a href="logout.php"><i class="fa-regular fa-user" style="color: #ffffff;"></i> log out</a></li>
                 </ul>
             </nav>
         </div>

@@ -1,5 +1,7 @@
 <?php
 session_start();
+include "redisconnect.php";
+
 // Check if the date parameter is set
 if (isset($_GET['date'])) {
     // Sanitize the date parameter
@@ -16,7 +18,7 @@ if (isset($_GET['date'])) {
               WHERE s.merchant_id = ? AND DATE(s.Timestamp) = ?";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("is", $_SESSION['merchantid'], $date);
+    $stmt->bind_param("is", $redis->get('merchantid'), $date);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -89,22 +91,13 @@ if (isset($_GET['date'])) {
         <header>
             <h1>
                 <?php
-                if (isset($_SESSION['merchantname'])) {
-                    echo $_SESSION['merchantname'];
+                if ($redis->exists('merchantname')) {
+                    echo $redis->get('merchantname');
                 }
                 ?>
             </h1>
             <div class="head">
-                <a href="logout.php">
-                    <?php
-                    // Check if "userid" session variable is set and not equal to 0
-                    if (isset($_SESSION["userid"]) && $_SESSION["userid"] != 0) {
-                        echo 'log out';
-                    } else {
-                        echo 'log in';
-                    }
-                    ?>
-                </a>
+                
                 <div class="menu">
                     <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                     <div id="hide" class="navbar-toggle">
@@ -114,6 +107,7 @@ if (isset($_GET['date'])) {
                         <a class="bar" href="transactions.php">Transactions</a>
                         <a class="bar" href="about.html">About</a>
                         <a class="bar" href="services.html">Services</a>
+                        <a class="bar" href="logout.php">Log out</a>
                     </div>
                 </div>
                 <nav class="nav" id="navbarLinks">
@@ -124,8 +118,10 @@ if (isset($_GET['date'])) {
                         <li><a href="transactions.php">Transactions</a></li>
                         <li><a href="about.html">About</a></li>
                         <li><a href="services.html">Services</a></li>
+                        <li><a href="logout.php"><i class="fa-regular fa-user" style="color: #ffffff;"></i> log out</a></li>
                     </ul>
                 </nav>
+
             </div>
         </header>
 

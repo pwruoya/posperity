@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+include "redisconnect.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $_SESSION['selectedId'] = $_GET['product_id'];
 }
@@ -59,8 +62,8 @@ $conn->close();
     <header>
         <h1>
             <?php
-            if (isset($_SESSION['merchantname'])) {
-                echo $_SESSION['merchantname'];
+            if ($redis->exists('merchantname')) {
+                echo $redis->get('merchantname');
             }
             ?>
         </h1>
@@ -117,18 +120,7 @@ $conn->close();
 
 
         <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "posperity";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
+        include 'dbconfig.php';
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if all required fields are present
@@ -145,19 +137,19 @@ $conn->close();
                 // Additional sanitization and validation can be added here
 
                 // Prepare and bind parameters for the SQL statement to update product details
-                $sql = "UPDATE `product` SET `name`=?, `description`=?, `price`=?, `quantity`=?, `img_url`=?, `user_id`=?, `merchant`=? WHERE `product_id`=?";
+                $sql = "UPDATE `product` SET `name`=?, `description`=?, `price`=?, `quantity`=?, `img_url`=?, `user_id`=?, `merchant_id`=? WHERE `product_id`=?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("ssdissii", $name, $description, $price, $quantity, $img_url, $user, $merchant, $productId);
 
                 // Example user and merchant values (adjust as needed)
-                $user = $_SESSION['userid'];
-                $merchant = $_SESSION['merchantid']; // Assuming you store the merchant ID in a session variable
+                $user = $redis->get('userid');
+                $merchant = $redis->get('merchantid'); // Assuming you store the merchant ID in a session variable
 
                 // Execute the SQL statement to update product details
                 if ($stmt->execute()) {
                     echo "Product updated successfully.";
                     // You can redirect the user to another page if needed
-                    header("Location: inventory.php");
+                    echo '<script>window.location.href = "inventory.php"</script>';
                     // exit();
                 } else {
                     echo "Error updating product: " . $stmt->error;
@@ -197,10 +189,13 @@ $conn->close();
 
         // Function to open camera for picture capture
         function openCamera() {
-            // Access the user's camera
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
+            const constraints = {
+                video: {
+                    facingMode: 'environment'
+                } // Use the back camera
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
                 .then(stream => {
                     const videoElement = document.createElement('video');
                     videoElement.srcObject = stream;

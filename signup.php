@@ -150,7 +150,7 @@ include 'dbconfig.php';
 
                                             if (sendEmail($to_email, $subject, $body, $from_email)) {
                                                 echo "Email sent successfully.";
-                                                header("Location: login.php");
+                                                echo '<script>window.location.href = "login.php"</script>';
                                             } else {
                                                 echo "Email sending failed.";
                                             }

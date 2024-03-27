@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'dbconfig.php';
+include "redisconnect.php";
 
 // Select the last inserted product ID from the product table
 $sql = "SELECT MAX(product_id) as last_product_id FROM product";
@@ -28,6 +29,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Item</title>
     <link rel="stylesheet" href="add.css">
+    <script src="title.js"></script>
     <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
     <!-- <script type="module" src="upload_image.js"></script> -->
 
@@ -81,6 +83,7 @@ $conn->close();
         </form>
 
         <?php
+        include 'dbconfig.php';
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if all required fields are present
@@ -96,39 +99,34 @@ $conn->close();
 
                 // Additional sanitization and validation can be added here
 
-                // Connect to your database
-                $servername = "localhost";
-                $username = "root";
-                $password = "";
-                $dbname = "posperity";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // Prepare and bind parameters for the SQL statement
-                $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
-
 
                 // Example user and merchant values (adjust as needed)
-                $user = $_SESSION['userid'];;
-                $merchant = $_SESSION['merchantid']; // Assuming you store the merchant ID in a session variable
+                if ($redis->exists('merchantid')) {
+                    $user = $redis->get('userid');
+                    $merchant = $redis->get('merchantid');
 
-                // Execute the SQL statement
-                if ($stmt->execute()) {
-                    echo "Item added successfully.";
-                    // You can redirect the user to another page if needed
-                    // header("Location: inventory.php");
-                    // exit();
+                    // Prepare and bind parameters for the SQL statement
+                    $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
+
+
+
+                    // Execute the SQL statement
+                    if ($stmt->execute()) {
+                        echo "Item added successfully.";
+                        // You can redirect the user to another page if needed
+                        // header("Location: inventory.php");
+                        // exit();
+                    } else {
+                        echo "Error adding item: " . $stmt->error;
+                    }
+
+                    // Close the statement and connection
+                    $stmt->close();
                 } else {
-                    echo "Error adding item: " . $stmt->error;
+                    echo 'mid empty';
                 }
-
-                // Close the statement and connection
-                $stmt->close();
                 $conn->close();
             } else {
                 echo "All fields are required.";
@@ -155,10 +153,13 @@ $conn->close();
 
         // Function to open camera for picture capture
         function openCamera() {
-            // Access the user's camera
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
+            const constraints = {
+                video: {
+                    facingMode: 'environment'
+                } // Use the back camera
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
                 .then(stream => {
                     const videoElement = document.createElement('video');
                     videoElement.srcObject = stream;

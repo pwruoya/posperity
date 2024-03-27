@@ -1,3 +1,13 @@
+<?php
+include "redisconnect.php";
+// Start session
+session_start();
+
+// Close Redis connection (Predis automatically handles connections, so no explicit close is needed)
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +71,7 @@
                         $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
                         $mname = $row['merchantname'];
-                        $merid = $row['merchant'];
+                        $merid = $row['merchant_id'];
 
 
                         // Password entered by the user during login
@@ -75,15 +85,27 @@
                             // Start the session
                             session_start();
 
-                            // Store the username in the session
-                            $_SESSION["username"] = $uname;
-                            $_SESSION["merchantname"] = $mname;
-                            $_SESSION["merchantid"] = $merid;
-                            $_SESSION["userid"] = $suid;
-                            echo $_SESSION["username"];
+                            // // Store the username in the session
+                            // $_SESSION["username"] =     $uname;
+                            // $_SESSION["merchantname"] = $mname;
+                            // $_SESSION["merchantid"] =   $merid;
+                            // $_SESSION["userid"] =       $suid;
+                            // echo $_SESSION["username"];
+                            // Store session data in Redis
+                            $redis->set('username', $uname);
+                            $redis->set('merchantname', $mname);
+                            $redis->set('merchantid', $merid);
+                            $redis->set('userid', $suid);
+
+                            // Echo session data to confirm it's stored
+                            echo "Username: " . $redis->get('username') . "<br>";
+                            echo "Merchant Name: " . $redis->get('merchantname') . "<br>";
+                            echo "Merchant ID: " . $redis->get('merchantid') . "<br>";
+                            echo "User ID: " . $redis->get('userid') . "<br>";
+
 
                             // Redirect to the home page
-                            header("Location: index.php");
+                            echo '<script>window.location.href = "index.php"</script>';
                             exit();
                         } else {
                             // Redirect back to the login page with an error message

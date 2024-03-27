@@ -1,9 +1,14 @@
 <?php
 // Database connection parameters
-$servername = "localhost";
-$dbusername = "root";
-$dbpassword = "";
-$database = "posperity";
+// $servername = "localhost";
+// $dbusername = "root";
+// $dbpassword = "";
+// $database = "posperity";
+
+$servername = "posper-server.mysql.database.azure.com";
+$dbusername = "mqsvqcmdyl";
+$dbpassword = "@posperity1";
+$database = "posper";
 
 try {
     $conn = new mysqli($servername, $dbusername, $dbpassword, $database);

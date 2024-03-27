@@ -1,3 +1,10 @@
+<?php
+include "redisconnect.php";
+// Start session
+session_start();
+
+// Close Redis connection (Predis automatically handles connections, so no explicit close is needed)
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,41 +22,36 @@
         <h1>
             <?php
             session_start();
-            if (isset($_SESSION['merchantname'])) {
-                echo $_SESSION['merchantname'];
+            if ($redis->exists('merchantname')) {
+                echo $redis->get('merchantname');
+            } else {
+                echo '<script>window.location.href = "login.php"</script>';
             }
             ?>
         </h1>
         <div class="head">
-            <a href="logout.php">
-                <?php
-                // Check if "userid" session variable is set and not equal to 0
-                if (isset($_SESSION["userid"]) && $_SESSION["userid"] != 0) {
-                    echo 'log out';
-                } else {
-                    echo 'log in';
-                }
-                ?>
-            </a>
+
             <div class="menu">
                 <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                 <div id="hide" class="navbar-toggle">
-                    <a class="bar" href="#">Home</a>
+                    <a class="bar" href="index.php">Home</a>
                     <a class="bar" href="makeSale.php">Make Sale</a>
                     <a class="bar" href="inventory.php">Inventory</a>
                     <a class="bar" href="transactions.php">Transactions</a>
                     <a class="bar" href="about.html">About</a>
                     <a class="bar" href="services.html">Services</a>
+                    <a class="bar" href="logout.php">Log out</a>
                 </div>
             </div>
             <nav class="nav" id="navbarLinks">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="makeSale.php">Make Sale</a></li>
                     <li><a href="inventory.php">Inventory</a></li>
                     <li><a href="transactions.php">Transactions</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
+                    <li><a href="logout.php"><i class="fa-regular fa-user" style="color: #ffffff;"></i> log out</a></li>
                 </ul>
             </nav>
         </div>
@@ -58,9 +60,10 @@
     <div id="maindiv">
         <div class="main-content" id="div2">
             <?php
-            if (isset($_SESSION['username'])) {
+            if ($redis->exists('merchantname')) {
                 // Display user details if logged in
-                echo "<h2>Welcome, " . $_SESSION['username'] . "</h2>";
+                echo "<h2> " . $redis->get('username') . " </h2>";
+                // echo "<h2>Welcome, " . $redis->get('merchantid') . "</h2>";
                 echo "<div class='profile-image'><img src='assets\profile.png' alt='Profile Image'></div>";
             } else {
                 // Display login button if not logged in

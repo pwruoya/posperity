@@ -1,6 +1,6 @@
 <?php
 include "mail.php";
-include 'dbconfig.php';
+include "dbconfig.php";
 session_start();
 $resetToken = generateResetToken();
 $reset = false;
@@ -187,7 +187,7 @@ function sendPasswordResetEmail($email, $resetToken)
                         $stmt_check->close();
                         if (isset($stmt_update)) $stmt_update->close();
                         if (isset($stmt_insert)) $stmt_insert->close();
-                        header("location: sent.html");
+                        echo '<script>window.location.href = "sent.html"</script>';
                     } else {
                         echo "No account with this email.";
                         $receivedData = 2;
@@ -213,7 +213,8 @@ function sendPasswordResetEmail($email, $resetToken)
 
                             // Prepare and bind the statement
                             $stmt = $conn->prepare($sql);
-                            $stmt->bind_param("ss", $password, $rUID);
+                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                            $stmt->bind_param("ss", $hashedPassword, $rUID);
 
                             // Prepare the SQL statement with a parameter placeholder
                             $sql1 = "SELECT `email`, `user_name` FROM user WHERE user_id = ?";
@@ -262,7 +263,7 @@ function sendPasswordResetEmail($email, $resetToken)
                             }
                             // Close statement and connection
                             $stmt->close();
-                            header("location:login.php");
+                            echo '<script>window.location.href = "login.php"</script>';
                         } else {
                             echo "passwords do not match";
                         }
