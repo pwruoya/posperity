@@ -146,12 +146,9 @@ $conn->close();
             } else {
 
                 echo "<script>";
-                echo "alert('Ensure you ave selected and uploaded an image')";
                 echo "alert('Ensure you have selected and uploaded an image');";
                 echo "localStorage.setItem('message', '1');";
                 echo "</script>";
-                exit;
-
                 exit;
             }
         }
