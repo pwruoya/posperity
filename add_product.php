@@ -81,6 +81,18 @@ $conn->close();
                 <input type="submit" value="Add Product">
             </div>
         </form>
+        <script>
+            // Retrieve data from local storage
+            var message = localStorage.getItem('message');
+
+            // Check if the message exists in local storage
+            if (message !== null) {
+                // The message doesn't exist in local storage
+                // Redirect the user back to the previous page
+                window.history.back();
+                console.log('Message from local storage:', message);
+            }
+        </script>
 
         <?php
         include 'dbconfig.php';
@@ -135,7 +147,11 @@ $conn->close();
 
                 echo "<script>";
                 echo "alert('Ensure you ave selected and uploaded an image')";
+                echo "alert('Ensure you have selected and uploaded an image');";
+                echo "localStorage.setItem('message', '1');";
                 echo "</script>";
+                exit;
+
                 exit;
             }
         }
