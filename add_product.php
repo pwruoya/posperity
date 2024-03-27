@@ -87,53 +87,55 @@ $conn->close();
         // Check if the form is submitted
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if all required fields are present
-            if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price']) && isset($_POST['quantity']) && isset($_POST['img_url'])) {
+            if (!empty($_POST['img_url'])) {
+                if (isset($_POST['name']) && isset($_POST['description']) && isset($_POST['price']) && isset($_POST['quantity'])) {
 
+                    // Sanitize inputs to prevent SQL injection
+                    $name = htmlspecialchars($_POST['name']);
+                    $description = htmlspecialchars($_POST['description']);
+                    $price = floatval($_POST['price']); // Convert to float for price
+                    $quantity = intval($_POST['quantity']); // Convert to integer for quantity
+                    $img_url = htmlspecialchars($_POST['img_url']);
+
+                    // Additional sanitization and validation can be added here
+
+
+                    // Example user and merchant values (adjust as needed)
+                    if ($redis->exists('merchantid')) {
+                        $user = $redis->get('userid');
+                        $merchant = $redis->get('merchantid');
+
+                        // Prepare and bind parameters for the SQL statement
+                        $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
+
+
+
+                        // Execute the SQL statement
+                        if ($stmt->execute()) {
+                            echo "Item added successfully.";
+                            // You can redirect the user to another page if needed
+                            // header("Location: inventory.php");
+                            // exit();
+                        } else {
+                            echo "Error adding item: " . $stmt->error;
+                        }
+
+                        // Close the statement and connection
+                        $stmt->close();
+                    } else {
+                        echo 'mid empty';
+                    }
+                    $conn->close();
+                } else {
+                    echo "All fields are required.";
+                }
+            } else {
 
                 echo "<script>";
-                echo "alert('img:" . $_POST['img_url'] . "')";
+                echo "alert('Ensure you ave selected and uploaded an image')";
                 echo "</script>";
-
-                // Sanitize inputs to prevent SQL injection
-                $name = htmlspecialchars($_POST['name']);
-                $description = htmlspecialchars($_POST['description']);
-                $price = floatval($_POST['price']); // Convert to float for price
-                $quantity = intval($_POST['quantity']); // Convert to integer for quantity
-                $img_url = htmlspecialchars($_POST['img_url']);
-
-                // Additional sanitization and validation can be added here
-
-
-                // Example user and merchant values (adjust as needed)
-                if ($redis->exists('merchantid')) {
-                    $user = $redis->get('userid');
-                    $merchant = $redis->get('merchantid');
-
-                    // Prepare and bind parameters for the SQL statement
-                    $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ssdissi", $name, $description, $price, $quantity, $img_url, $user, $merchant);
-
-
-
-                    // Execute the SQL statement
-                    if ($stmt->execute()) {
-                        echo "Item added successfully.";
-                        // You can redirect the user to another page if needed
-                        // header("Location: inventory.php");
-                        // exit();
-                    } else {
-                        echo "Error adding item: " . $stmt->error;
-                    }
-
-                    // Close the statement and connection
-                    $stmt->close();
-                } else {
-                    echo 'mid empty';
-                }
-                $conn->close();
-            } else {
-                echo "All fields are required.";
             }
         }
         ?>
