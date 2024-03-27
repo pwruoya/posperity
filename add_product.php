@@ -91,7 +91,7 @@ $conn->close();
 
 
                 echo "<script>";
-                echo "alert('img:" . $_POST['img_url'] . "'";
+                echo "alert('img:" . $_POST['img_url'] . "')";
                 echo "</script>";
 
                 // Sanitize inputs to prevent SQL injection
