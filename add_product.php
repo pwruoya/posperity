@@ -136,6 +136,7 @@ $conn->close();
                 echo "<script>";
                 echo "alert('Ensure you ave selected and uploaded an image')";
                 echo "</script>";
+                die("Image not uploaded");
             }
         }
         ?>
