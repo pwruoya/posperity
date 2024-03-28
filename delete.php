@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $_SESSION['selectedId'] = $_GET['product_id'];
 }
