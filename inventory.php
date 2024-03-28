@@ -119,8 +119,8 @@ session_start();
                             echo "<p>stock: $quantity</p>";
                         }
 
-                        echo '<div id="icons"><div class="edit"><a href="delete.php?product_id=' . $prod . '"><i class="fa fa-trash" aria-hidden="true" style="color: #ffffff;"></i></a></div>';
-                        echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div></div>';
+                        // echo '<div id="icons"><div class="edit"><a href="delete.php?product_id=' . $prod . '"><i class="fa fa-trash" aria-hidden="true" style="color: #ffffff;"></i></a></div>';
+                        echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div>';
                         echo '</div>';
                         echo '</div>';
                     }
