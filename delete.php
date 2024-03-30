@@ -41,7 +41,7 @@ $conn->close();
 <body>
     <div id="maindiv">
         <div class="main-content" id="div2">
-            <P>DELETING </P>
+            <p>DELETING</p>
         </div>
 
     </div>
