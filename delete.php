@@ -21,6 +21,24 @@
                 include 'dbconfig.php'; // Include database configuration file
 
                 try {
+                    $sql = "DELETE FROM `sale` WHERE `product_id` = ?";
+                    $stmt = $conn->prepare($sql);
+
+                    $id = intval($_SESSION['selectedId']);
+                    $stmt->bind_param("i", $id);
+
+                    $stmt->execute();
+
+                    // Check the number of rows affected
+                    $rowsAffected = $stmt->affected_rows;
+
+                    if ($rowsAffected > 0) {
+                        echo $rowsAffected . " related transactions deleted";
+                    }
+
+                    $stmt->close();
+
+
                     // Prepare and bind the SQL query with a placeholder for the ID
                     $sql = "DELETE FROM `product` WHERE `product_id` = ?";
                     $stmt = $conn->prepare($sql);
@@ -38,7 +56,7 @@
                     } else {
                         echo "Failed to delete product.";
                     }
-                    echo '<script>window.location.href = "inventory.php"</script>';
+                    // echo '<script>window.location.href = "inventory.php"</script>';
 
                     $stmt->close();
                 } catch (Exception $e) {
