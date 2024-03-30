@@ -180,7 +180,7 @@ session_start();
 
     function toDelete() {
         // Redirect to another page (replace 'page-url' with the actual URL)
-        if (confirm('Deleting This product will automatically delete all transactions related to it.\\n Are you sre you want to delete this product from inventory?')) {
+        if (confirm('Deleting This product will automatically delete all transactions related to it.\n Are you sre you want to delete this product from inventory?')) {
             window.location.href = 'delete.php?product_id=' + <?php echo $prod ?>;
         } else {
 
