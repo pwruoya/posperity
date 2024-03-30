@@ -27,3 +27,23 @@ echo '<script>window.location.href = "inventory.php"</script>';
 
 $stmt->close();
 $conn->close();
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete</title>
+</head>
+
+<body>
+    <div id="maindiv">
+        <div class="main-content" id="div2">
+            <P>DELETING </P>
+        </div>
+
+    </div>
+</body>
+
+</html>
