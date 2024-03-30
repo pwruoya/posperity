@@ -65,6 +65,10 @@ session_start();
             if (isset($logged['merchantname'])) {
                 // Display user details if logged in
                 echo "<h2> " . $logged['username'] . " </h2>";
+                if (isset($_COOKIE['session_id'])) {
+                    // Get the value of the "session_id" cookie
+                    $sessionId = $_COOKIE['session_id'];
+                }
                 // echo "<h2>Welcome, " . $logged['merchantid'] . "</h2>";
                 echo "<div class='profile-image'><img src='assets\profile.png' alt='Profile Image'></div>";
             } else {

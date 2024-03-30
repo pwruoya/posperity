@@ -78,7 +78,7 @@ session_start();
                                 'userid' => $row['user_id']
                             ];
                             $redis->hmset('session_data', $sessionData);
-
+                            setcookie("session_id", $row['user_id'], time() + 86400, "/");
                             // Redirect to the home page
                             // header("Location: index.php");
                             echo '<script>window.location.href = "index.php"</script>';
