@@ -92,6 +92,7 @@ session_start();
                             // $_SESSION["userid"] =       $suid;
                             // echo $_SESSION["username"];
                             // Store session data in Redis
+                            $redis->set($uname, 'username');
                             $redis->set('username', $uname);
                             $redis->set('merchantname', $mname);
                             $redis->set('merchantid', $merid);
