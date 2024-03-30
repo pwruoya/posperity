@@ -1,5 +1,6 @@
 <?php
 include "redisconnect.php";
+$logged = $redis->hgetall('session_data');
 // Start session
 session_start();
 
@@ -24,8 +25,8 @@ session_start();
     <header>
         <h1>
             <?php
-            if ($redis->exists('merchantname')) {
-                echo "{$redis->get('merchantname')} Invoice";
+            if (isset($logged['merchantname'])) {
+                echo "{$logged['merchantname']} Invoice";
             }
             ?>
         </h1>
@@ -82,8 +83,8 @@ session_start();
                     $insertStmt->bind_param("iisddii", $productId, $merchantId, $quantity, $price, $discount, $sellingPrice, $userId);
 
                     // Get session variables
-                    $userId = $redis->get('userid');
-                    $merchantId = $redis->get('merchantid');
+                    $userId = $logged['userid'];
+                    $merchantId = $logged['merchantid'];
 
                     // Initialize arrays to store sale details
                     $productsSold = [];

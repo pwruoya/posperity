@@ -2,7 +2,7 @@
 session_start();
 
 include "redisconnect.php";
-
+$logged = $redis->hgetall('session_data');
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $_SESSION['selectedId'] = $_GET['product_id'];
 }
@@ -63,7 +63,7 @@ $conn->close();
         <h1>
             <?php
             if ($redis->exists('merchantname')) {
-                echo $redis->get('merchantname');
+                echo $logged['merchantname'];
             }
             ?>
         </h1>
@@ -142,8 +142,8 @@ $conn->close();
                 $stmt->bind_param("ssdissii", $name, $description, $price, $quantity, $img_url, $user, $merchant, $productId);
 
                 // Example user and merchant values (adjust as needed)
-                $user = $redis->get('userid');
-                $merchant = $redis->get('merchantid'); // Assuming you store the merchant ID in a session variable
+                $user = $logged['userid'];
+                $merchant = $logged['merchantid']; // Assuming you store the merchant ID in a session variable
 
                 // Execute the SQL statement to update product details
                 if ($stmt->execute()) {

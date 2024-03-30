@@ -67,57 +67,28 @@ session_start();
                     // Check if the query returned any rows
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
-                        $suid  = $row['user_id'];
-                        $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
-                        $mname = $row['merchantname'];
-                        $merid = $row['merchant_id'];
 
-
-                        // Password entered by the user during login
-                        $userEnteredPassword = $_POST["password"];
-                        $hashedUserEnteredPassword = password_hash($userEnteredPassword, PASSWORD_DEFAULT);
-                        // Verify if the user-entered password matches the stored hashed password
-                        echo password_verify($userEnteredPassword, $hashedPassword);
                         if (password_verify($userEnteredPassword, $hashedPassword)) {
-
-                            echo "match found";
-                            // Start the session
-                            session_start();
-
-                            // // Store the username in the session
-                            // $_SESSION["username"] =     $uname;
-                            // $_SESSION["merchantname"] = $mname;
-                            // $_SESSION["merchantid"] =   $merid;
-                            // $_SESSION["userid"] =       $suid;
-                            // echo $_SESSION["username"];
                             // Store session data in Redis
-                            $redis->set($uname, 'username');
-                            $redis->set('username', $uname);
-                            $redis->set('merchantname', $mname);
-                            $redis->set('merchantid', $merid);
-                            $redis->set('userid', $suid);
-
-                            // Echo session data to confirm it's stored
-                            echo "Username: " . $redis->get('username') . "<br>";
-                            echo "Merchant Name: " . $redis->get('merchantname') . "<br>";
-                            echo "Merchant ID: " . $redis->get('merchantid') . "<br>";
-                            echo "User ID: " . $redis->get('userid') . "<br>";
-
+                            $sessionData = [
+                                'username' => $row['user_name'],
+                                'merchantname' => $row['merchantname'],
+                                'merchantid' => $row['merchant_id'],
+                                'userid' => $row['user_id']
+                            ];
+                            $redis->hmset('session_data', $sessionData);
 
                             // Redirect to the home page
+                            // header("Location: index.php");
                             echo '<script>window.location.href = "index.php"</script>';
                             exit();
                         } else {
-                            // Redirect back to the login page with an error message
-                            // header("Location: login.php?error=1");
-                            echo "incorrect password,please retry";
+                            echo "Incorrect password, please retry";
                         }
                     } else {
-                        // No matching user found
                         echo "Incorrect email or username, please retry";
                     }
-
                     // Close statement and connection
                     $stmt->close();
                     $conn->close();

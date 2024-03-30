@@ -1,5 +1,7 @@
 <?php
 include "redisconnect.php";
+$logged = $redis->hgetall('session_data');
+$logged = $redis->hgetall('session_data');
 // Start session
 session_start();
 
@@ -22,9 +24,8 @@ session_start();
         <h1>
             <?php
             session_start();
-            if ($redis->exists('merchantname')) {
-                echo $redis->get('merchantname');
-                echo $redis->get($redis->get('merchantname'));
+            if (isset($logged['merchantname'])) {
+                echo $logged['merchantname'];
             } else {
                 echo '<script>window.location.href = "login.php"</script>';
             }
@@ -63,8 +64,8 @@ session_start();
             <?php
             if ($redis->exists('merchantname')) {
                 // Display user details if logged in
-                echo "<h2> " . $redis->get('username') . " </h2>";
-                // echo "<h2>Welcome, " . $redis->get('merchantid') . "</h2>";
+                echo "<h2> " . $logged['username'] . " </h2>";
+                // echo "<h2>Welcome, " . $logged['merchantid'] . "</h2>";
                 echo "<div class='profile-image'><img src='assets\profile.png' alt='Profile Image'></div>";
             } else {
                 // Display login button if not logged in

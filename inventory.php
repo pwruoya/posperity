@@ -1,5 +1,6 @@
 <?php
 include "redisconnect.php";
+$logged = $redis->hgetall('session_data');
 // Start session
 session_start();
 
@@ -29,8 +30,8 @@ session_start();
     <header>
         <h1>
             <?php
-            if ($redis->exists('merchantname')) {
-                echo "{$redis->get('merchantname')} Inventory";
+            if (isset($logged['merchantname'])) {
+                echo "{$logged['merchantname']} Inventory";
             }
             ?>
         </h1>
@@ -89,7 +90,7 @@ session_start();
                 $stmt = $conn->prepare($sql);
 
                 // Bind the parameter to the statement
-                $stmt->bind_param("i", $redis->get('merchantid'));
+                $stmt->bind_param("i", $logged['merchantid']);
 
                 // Execute the query
                 $stmt->execute();

@@ -1,5 +1,6 @@
 <?php
 include "redisconnect.php";
+$logged = $redis->hgetall('session_data');
 // Start session
 session_start();
 
@@ -71,8 +72,8 @@ session_start();
     <header>
         <h1>
             <?php
-            if ($redis->exists('merchantname')) {
-                echo $redis->get('merchantname');
+            if (isset($logged['merchantname'])) {
+                echo $logged['merchantname'];
             }
             ?>
         </h1>

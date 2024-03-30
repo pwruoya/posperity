@@ -2,7 +2,7 @@
 session_start();
 include 'dbconfig.php';
 include "redisconnect.php";
-
+$logged = $redis->hgetall('session_data');
 // Select the last inserted product ID from the product table
 $sql = "SELECT MAX(product_id) as last_product_id FROM product";
 $result = $conn->query($sql);
@@ -103,8 +103,8 @@ $conn->close();
 
                     // Example user and merchant values (adjust as needed)
                     if ($redis->exists('merchantid')) {
-                        $user = $redis->get('userid');
-                        $merchant = $redis->get('merchantid');
+                        $user = $logged['userid'];
+                        $merchant = $logged['merchantid'];
 
                         // Prepare and bind parameters for the SQL statement
                         $sql = "INSERT INTO product (name, description, price, quantity, img_url, user_id, merchant_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
