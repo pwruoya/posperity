@@ -33,7 +33,9 @@
                     $rowsAffected = $stmt->affected_rows;
 
                     if ($rowsAffected > 0) {
-                        echo $rowsAffected . " related transactions deleted";
+                        echo "<script>";
+                        echo  "alert('" . $rowsAffected . " related transactions deleted');";
+                        echo "</script>";
                     }
 
                     $stmt->close();
@@ -56,7 +58,7 @@
                     } else {
                         echo "Failed to delete product.";
                     }
-                    // echo '<script>window.location.href = "inventory.php"</script>';
+                    echo '<script>window.location.href = "inventory.php"</script>';
 
                     $stmt->close();
                 } catch (Exception $e) {
