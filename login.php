@@ -68,7 +68,7 @@ session_start();
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         $hashedPassword = $row['password'];
-
+                        $me = $row['user_id'];
                         if (password_verify($userEnteredPassword, $hashedPassword)) {
                             // Store session data in Redis
                             $sessionData = [
@@ -77,8 +77,9 @@ session_start();
                                 'merchantid' => $row['merchant_id'],
                                 'userid' => $row['user_id']
                             ];
-                            $redis->hmset('session_data', $sessionData);
-                            setcookie("session_id", $row['user_id'], time() + 86400, "/");
+                            $redis->hmset("user:$me", $sessionData);
+                            $redis->expire("user:$me", 7200);
+                            setcookie("user_id", $me, time() + 7200, "/");
                             // Redirect to the home page
                             // header("Location: index.php");
                             echo '<script>window.location.href = "index.php"</script>';
