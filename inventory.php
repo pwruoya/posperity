@@ -178,7 +178,7 @@ session_start();
         window.location.href = 'add_product.php';
     }
 
-    function toAdd() {
+    function toDelete() {
         // Redirect to another page (replace 'page-url' with the actual URL)
         window.location.href = 'delete.php';
     }
