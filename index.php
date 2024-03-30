@@ -62,7 +62,7 @@ session_start();
     <div id="maindiv">
         <div class="main-content" id="div2">
             <?php
-            if ($redis->exists('merchantname')) {
+            if (isset($logged['merchantname'])) {
                 // Display user details if logged in
                 echo "<h2> " . $logged['username'] . " </h2>";
                 // echo "<h2>Welcome, " . $logged['merchantid'] . "</h2>";
