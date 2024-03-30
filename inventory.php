@@ -119,7 +119,7 @@ session_start();
                             echo "<p>stock: $quantity</p>";
                         }
 
-                        echo '<div id="icons"><div class="edit" onclick = toDelete() ><i class="fa fa-trash" aria-hidden="true" style="color: #ffffff;"></i></div>';
+                        echo '<div id="icons"><div class="edit" onclick = toDelete(' . $prod . ') ><i class="fa fa-trash" aria-hidden="true" style="color: #ffffff;"></i></div>';
                         echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div></div>';
                         echo '</div>';
                         echo '</div>';
@@ -178,10 +178,10 @@ session_start();
         window.location.href = 'add_product.php';
     }
 
-    function toDelete() {
+    function toDelete(pid) {
         // Redirect to another page (replace 'page-url' with the actual URL)
         if (confirm('Deleting This product will automatically delete all transactions related to it.\n Are you sre you want to delete this product from inventory?')) {
-            window.location.href = 'delete.php?product_id=' + <?php echo $prod ?>;
+            window.location.href = 'delete.php?product_id=' + pid;
         } else {
 
         }
