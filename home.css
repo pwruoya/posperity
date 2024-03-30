@@ -207,6 +207,10 @@ tr {
         align-items: flex-end;
     }
 
+    .card-content {
+        padding: 10px;
+        flex: 1;
+    }
     .navbar-toggle {
         display: none;
         flex-direction: column;
@@ -225,7 +229,6 @@ tr {
 
     .card {
         flex-direction: row;
-        justify-content: space-between;
         max-width: 100vw;
     }
 
