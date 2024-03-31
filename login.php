@@ -17,6 +17,22 @@ session_start();
     <title>Login</title>
     <link rel="stylesheet" href="sign.css">
 </head>
+<style>
+    .cookie-message {
+        background-color: #f8d7da;
+        /* Red background color */
+        color: #721c24;
+        /* Text color */
+        padding: 10px;
+        /* Padding around the message */
+        margin-bottom: 10px;
+        /* Space below the message */
+        border: 1px solid #f5c6cb;
+        /* Border around the message */
+        border-radius: 5px;
+        /* Rounded corners */
+    }
+</style>
 
 <body>
     <header>
@@ -104,6 +120,9 @@ session_start();
     </form>
 
     <footer>
+        <div class="cookie-message">
+            Please enable cookies in your browser to log in. Cookies are required for this website to function properly.
+        </div>
         <p>&copy; 2024 Posperity. All rights reserved.</p>
     </footer>
 </body>
