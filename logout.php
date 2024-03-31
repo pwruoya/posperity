@@ -2,12 +2,13 @@
 include 'redisconnect.php';
 // Start the PHP session
 session_start();
-
+$me = $_COOKIE['PHPSESSID'];
+// $logged = $redis->hgetall("user:$me");
 
 // Handle logout
-if ($redis->exists('merchantname')) {
+if ($redis->exists("user:$me")) {
     // Remove session variables from Redis
-    $redis->del('username', 'merchantname', 'merchantid', 'userid');
+    $redis->del("user:$me");
     // Clear all session variables
     session_unset();
     // Destroy the session
