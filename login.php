@@ -18,19 +18,27 @@ session_start();
     <link rel="stylesheet" href="sign.css">
 </head>
 <style>
-    .cookie-message {
-        background-color: #f8d7da;
-        /* Red background color */
-        color: #721c24;
-        /* Text color */
-        padding: 10px;
-        /* Padding around the message */
-        margin-bottom: 10px;
-        /* Space below the message */
-        border: 1px solid #f5c6cb;
-        /* Border around the message */
+    .cookie-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+    }
+
+    .cookie-button {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        display: inline-block;
+        margin: 10px;
+        cursor: pointer;
         border-radius: 5px;
-        /* Rounded corners */
     }
 </style>
 
@@ -118,13 +126,26 @@ session_start();
 
     </div>
     </form>
-
+    <div class="cookie-banner" id="cookieBanner">
+        This website uses cookies to ensure you get the best experience on our website.
+        <button class="cookie-button" onclick="acceptCookies()">Accept Cookies</button>
+    </div>
     <footer>
-        <div class="cookie-message">
-            Please enable cookies in your browser to log in. Cookies are required for this website to function properly.
-        </div>
         <p>&copy; 2024 Posperity. All rights reserved.</p>
     </footer>
 </body>
+<script>
+    function acceptCookies() {
+        // Set a cookie to indicate that the user has accepted cookies
+        document.cookie = "cookiesAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+        // Hide the cookie banner
+        document.getElementById("cookieBanner").style.display = "none";
+    }
+
+    // Check if the user has already accepted cookies
+    if (document.cookie.includes("cookiesAccepted=true")) {
+        document.getElementById("cookieBanner").style.display = "none";
+    }
+</script>
 
 </html>
