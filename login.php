@@ -44,7 +44,7 @@ session_start();
 
 <body>
     <header>
-        <h1>Posperity System <small>test</small> </h1>
+        <h1>Posperity System <small>cookie test</small> </h1>
     </header>
 
 
