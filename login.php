@@ -22,7 +22,7 @@ session_start();
         position: fixed;
         bottom: 0;
         left: 0;
-        width: 100%;
+        width: 98%;
         background-color: #333;
         color: #fff;
         padding: 10px 20px;
