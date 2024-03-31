@@ -4,7 +4,8 @@ session_start();
 include 'dbconfig.php';
 
 include "redisconnect.php";
-$logged = $redis->hgetall('session_data');
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 
 // Query to fetch data grouped by year, month, week, and day
 $query = "SELECT YEAR(`Timestamp`) AS year, MONTH(`Timestamp`) AS month, WEEK(`Timestamp`, 1) AS week, DAY(`Timestamp`) AS day, SUM(selling_price) AS total FROM `sale` WHERE merchant_id = ? GROUP BY year, month, week, day";

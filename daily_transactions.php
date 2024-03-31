@@ -1,7 +1,8 @@
 <?php
 session_start();
 include "redisconnect.php";
-$logged = $redis->hgetall('session_data');
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 // Check if the date parameter is set
 if (isset($_GET['date'])) {
     // Sanitize the date parameter

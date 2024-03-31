@@ -2,7 +2,8 @@
 session_start();
 
 include "redisconnect.php";
-$logged = $redis->hgetall('session_data');
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $_SESSION['selectedId'] = $_GET['product_id'];
 }

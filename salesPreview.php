@@ -1,7 +1,8 @@
 <?php
 include "redisconnect.php";
 include "dbconfig.php";
-$logged = $redis->hgetall('session_data');
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 // Start session
 session_start();
 

@@ -2,7 +2,9 @@
 session_start();
 include 'dbconfig.php';
 include "redisconnect.php";
-$logged = $redis->hgetall('session_data');
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
+
 // Select the last inserted product ID from the product table
 $sql = "SELECT MAX(product_id) as last_product_id FROM product";
 $result = $conn->query($sql);
