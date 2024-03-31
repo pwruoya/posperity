@@ -17,6 +17,30 @@ session_start();
     <title>Login</title>
     <link rel="stylesheet" href="sign.css">
 </head>
+<style>
+    .cookie-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 98%;
+        background-color: #333;
+        color: #fff;
+        padding: 2%;
+        text-align: center;
+    }
+
+    .cookie-button {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        display: inline-block;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+</style>
 
 <body>
     <header>
@@ -49,7 +73,7 @@ session_start();
 
                     // User input (username or email)
                     $userInput = $_POST["username"];
-
+                    $userEnteredPassword = $_POST["password"];
                     // Prepare SQL statement
                     $sql = "SELECT u.user_id, u.user_name, u.password, u.merchant_id, u.email, u.fullname, u.address, u.mobile,m.merchantname 
                         FROM user u LEFT JOIN merchant m ON u.merchant_id = m.mid WHERE u.user_name = ? OR u.email = ?";
@@ -67,56 +91,33 @@ session_start();
                     // Check if the query returned any rows
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
-                        $suid  = $row['user_id'];
-                        $uname  = $row['user_name'];
                         $hashedPassword = $row['password'];
-                        $mname = $row['merchantname'];
-                        $merid = $row['merchant_id'];
-
-
-                        // Password entered by the user during login
-                        $userEnteredPassword = $_POST["password"];
-                        $hashedUserEnteredPassword = password_hash($userEnteredPassword, PASSWORD_DEFAULT);
-                        // Verify if the user-entered password matches the stored hashed password
-                        echo password_verify($userEnteredPassword, $hashedPassword);
+                        $me = $_COOKIE['PHPSESSID'];
                         if (password_verify($userEnteredPassword, $hashedPassword)) {
-
-                            echo "match found";
-                            // Start the session
-                            session_start();
-
-                            // // Store the username in the session
-                            // $_SESSION["username"] =     $uname;
-                            // $_SESSION["merchantname"] = $mname;
-                            // $_SESSION["merchantid"] =   $merid;
-                            // $_SESSION["userid"] =       $suid;
-                            // echo $_SESSION["username"];
                             // Store session data in Redis
-                            $redis->set('username', $uname);
-                            $redis->set('merchantname', $mname);
-                            $redis->set('merchantid', $merid);
-                            $redis->set('userid', $suid);
-
-                            // Echo session data to confirm it's stored
-                            echo "Username: " . $redis->get('username') . "<br>";
-                            echo "Merchant Name: " . $redis->get('merchantname') . "<br>";
-                            echo "Merchant ID: " . $redis->get('merchantid') . "<br>";
-                            echo "User ID: " . $redis->get('userid') . "<br>";
-
-
-                            // Redirect to the home page
-                            echo '<script>window.location.href = "index.php"</script>';
-                            exit();
+                            $sessionData = [
+                                'username' => $row['user_name'],
+                                'merchantname' => $row['merchantname'],
+                                'merchantid' => $row['merchant_id'],
+                                'userid' => $row['user_id']
+                            ];
+                            try {
+                                // Assuming $redis is your Redis connection object and $me is the user ID
+                                $redis->hmset("user:$me", $sessionData);
+                                $redis->expire("user:$me", 7200);
+                                // Redirect to the home page
+                                // header("Location: index.php");
+                                echo '<script>window.location.href = "index.php"</script>';
+                            } catch (Exception $e) {
+                                // Handle the error
+                                echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
+                            }
                         } else {
-                            // Redirect back to the login page with an error message
-                            // header("Location: login.php?error=1");
-                            echo "incorrect password,please retry";
+                            echo "Incorrect password, please retry";
                         }
                     } else {
-                        // No matching user found
                         echo "Incorrect email or username, please retry";
                     }
-
                     // Close statement and connection
                     $stmt->close();
                     $conn->close();
@@ -129,10 +130,26 @@ session_start();
 
     </div>
     </form>
-
+    <div class="cookie-banner" id="cookieBanner">
+        This website uses cookies to ensure you get the best experience on our website.
+        <button class="cookie-button" onclick="acceptCookies()">Accept Cookies</button>
+    </div>
     <footer>
         <p>&copy; 2024 Posperity. All rights reserved.</p>
     </footer>
 </body>
+<script>
+    function acceptCookies() {
+        // Set a cookie to indicate that the user has accepted cookies
+        document.cookie = "cookiesAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/";
+        // Hide the cookie banner
+        document.getElementById("cookieBanner").style.display = "none";
+    }
+
+    // Check if the user has already accepted cookies
+    if (document.cookie.includes("cookiesAccepted=true")) {
+        document.getElementById("cookieBanner").style.display = "none";
+    }
+</script>
 
 </html>

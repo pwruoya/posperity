@@ -1,5 +1,7 @@
 <?php
 include "redisconnect.php";
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 // Start session
 session_start();
 
@@ -18,13 +20,19 @@ session_start();
     <script src="https://kit.fontawesome.com/f7e75704ad.js" crossorigin="anonymous"></script>
 </head>
 
+<style>
+    #icons {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 
 <body>
     <header>
         <h1>
             <?php
-            if ($redis->exists('merchantname')) {
-                echo "{$redis->get('merchantname')} Inventory";
+            if (isset($logged['merchantname'])) {
+                echo "{$logged['merchantname']} Inventory";
             }
             ?>
         </h1>
@@ -83,7 +91,7 @@ session_start();
                 $stmt = $conn->prepare($sql);
 
                 // Bind the parameter to the statement
-                $stmt->bind_param("i", $redis->get('merchantid'));
+                $stmt->bind_param("i", $logged['merchantid']);
 
                 // Execute the query
                 $stmt->execute();
@@ -112,10 +120,11 @@ session_start();
                             // Otherwise, echo the quantity as normal
                             echo "<p>stock: $quantity</p>";
                         }
-                        echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div>';
 
-                        echo "</div>";
-                        echo "</div>";
+                        echo '<div id="icons"><div class="edit" onclick = toDelete(' . $prod . ') ><i class="fa fa-trash" aria-hidden="true" style="color: #ffffff;"></i></div>';
+                        echo '<div class="edit"><a href="editInventory.php?product_id=' . $prod . '"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i></a></div></div>';
+                        echo '</div>';
+                        echo '</div>';
                     }
                 } else {
 
@@ -169,6 +178,15 @@ session_start();
     function toAdd() {
         // Redirect to another page (replace 'page-url' with the actual URL)
         window.location.href = 'add_product.php';
+    }
+
+    function toDelete(pid) {
+        // Redirect to another page (replace 'page-url' with the actual URL)
+        if (confirm('Deleting This product will automatically delete all transactions related to it.\n Are you sre you want to delete this product from inventory?')) {
+            window.location.href = 'delete.php?product_id=' + pid;
+        } else {
+
+        }
     }
 </script>
 

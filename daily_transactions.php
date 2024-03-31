@@ -1,7 +1,8 @@
 <?php
 session_start();
 include "redisconnect.php";
-
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 // Check if the date parameter is set
 if (isset($_GET['date'])) {
     // Sanitize the date parameter
@@ -18,7 +19,7 @@ if (isset($_GET['date'])) {
               WHERE s.merchant_id = ? AND DATE(s.Timestamp) = ?";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("is", $redis->get('merchantid'), $date);
+    $stmt->bind_param("is", $logged['merchantid'], $date);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -91,13 +92,13 @@ if (isset($_GET['date'])) {
         <header>
             <h1>
                 <?php
-                if ($redis->exists('merchantname')) {
-                    echo $redis->get('merchantname');
+                if (isset($logged['merchantname'])) {
+                    echo $logged['merchantname'];
                 }
                 ?>
             </h1>
             <div class="head">
-                
+
                 <div class="menu">
                     <a onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></a>
                     <div id="hide" class="navbar-toggle">

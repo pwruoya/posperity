@@ -1,5 +1,7 @@
 <?php
 include "redisconnect.php";
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
 // Start session
 session_start();
 
@@ -23,8 +25,8 @@ session_start();
     <header>
         <h1>
             <?php
-            if ($redis->exists('merchantname')) {
-                echo "{$redis->get('merchantname')} Sales";
+            if (isset($logged['merchantname'])) {
+                echo "{$logged['merchantname']} Sales";
             }
             ?>
         </h1>
@@ -81,8 +83,8 @@ session_start();
 
                 $stmt = $conn->prepare($sql);
 
-                // Bind the parameter to the statement
-                $stmt->bind_param("i", $redis->get('merchantid'));
+                // logged[o the statemen]
+                $stmt->bind_param("i", $logged['merchantid']);
 
                 // Execute the query
                 $stmt->execute();
