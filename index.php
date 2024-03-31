@@ -29,7 +29,7 @@ session_start();
             if (isset($_COOKIE['user_id'])) {
                 echo $logged['merchantname'];
             } else {
-                echo '<script>window.location.href = "login.php"</script>';
+                // echo '<script>window.location.href = "login.php"</script>';
             }
             ?>
         </h1>
