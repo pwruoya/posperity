@@ -104,7 +104,7 @@ $conn->close();
 
 
                     // Example user and merchant values (adjust as needed)
-                    if ($redis->exists('merchantid')) {
+                    if (isset($logged['merchantid'])) {
                         $user = $logged['userid'];
                         $merchant = $logged['merchantid'];
 

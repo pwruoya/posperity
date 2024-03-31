@@ -92,7 +92,7 @@ if (isset($_GET['date'])) {
         <header>
             <h1>
                 <?php
-                if ($redis->exists('merchantname')) {
+                if (isset($logged['merchantname'])) {
                     echo $logged['merchantname'];
                 }
                 ?>

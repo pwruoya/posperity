@@ -6,7 +6,7 @@ $me = $_COOKIE['PHPSESSID'];
 // $logged = $redis->hgetall("user:$me");
 
 // Handle logout
-if ($redis->exists("user:$me")) {
+if (isset($logged["user:$me"])) {
     // Remove session variables from Redis
     $redis->del("user:$me");
     // Clear all session variables
