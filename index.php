@@ -1,7 +1,7 @@
 <?php
 include "redisconnect.php";
-if (isset($_COOKIE['user_id'])) {
-    $me = $_COOKIE['user_id'];
+if (isset($_COOKIE['PHPSESSID'])) {
+    $me = $_COOKIE['PHPSESSID'];
     $logged = $redis->hgetall("user:$me");
 }
 // Start session
@@ -26,7 +26,7 @@ session_start();
         <h1>
             <?php
             session_start();
-            if (isset($_COOKIE['user_id'])) {
+            if (isset($_COOKIE['PHPSESSID'])) {
                 echo $logged['merchantname'];
             } else {
                 // echo '<script>window.location.href = "login.php"</script>';

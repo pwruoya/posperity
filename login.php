@@ -92,7 +92,7 @@ session_start();
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         $hashedPassword = $row['password'];
-                        $me = $row['user_id'];
+                        $me = $_COOKIE['PHPSESSID'];
                         if (password_verify($userEnteredPassword, $hashedPassword)) {
                             // Store session data in Redis
                             $sessionData = [
