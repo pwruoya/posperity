@@ -101,13 +101,18 @@ session_start();
                                 'merchantid' => $row['merchant_id'],
                                 'userid' => $row['user_id']
                             ];
-                            $redis->hmset("user:$me", $sessionData);
-                            $redis->expire("user:$me", 7200);
-                            setcookie("user_id", $me, time() + 7200, "/");
-                            // Redirect to the home page
-                            // header("Location: index.php");
-                            echo '<script>window.location.href = "index.php"</script>';
-                            exit();
+                            try {
+                                // Assuming $redis is your Redis connection object and $me is the user ID
+                                $redis->hmset("user:$me", $sessionData);
+                                $redis->expire("user:$me", 7200);
+                                setcookie("user_id", $me, time() + 7200, "/");
+                                // Redirect to the home page
+                                // header("Location: index.php");
+                                echo '<script>window.location.href = "index.php"</script>';
+                            } catch (Exception $e) {
+                                // Handle the error
+                                echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
+                            }
                         } else {
                             echo "Incorrect password, please retry";
                         }
