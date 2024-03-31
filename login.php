@@ -105,7 +105,6 @@ session_start();
                                 // Assuming $redis is your Redis connection object and $me is the user ID
                                 $redis->hmset("user:$me", $sessionData);
                                 $redis->expire("user:$me", 7200);
-                                setcookie("user_id", $me, time() + 7200, "/");
                                 // Redirect to the home page
                                 // header("Location: index.php");
                                 echo '<script>window.location.href = "index.php"</script>';
