@@ -25,7 +25,7 @@ session_start();
         width: 98%;
         background-color: #333;
         color: #fff;
-        padding: 10px 20px;
+        padding: 2%;
         text-align: center;
     }
 
