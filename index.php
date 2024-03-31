@@ -1,9 +1,10 @@
 <?php
+
+session_start();
 include "redisconnect.php";
-if (isset($_COOKIE['PHPSESSID'])) {
-    $me = $_COOKIE['PHPSESSID'];
-    $logged = $redis->hgetall("user:$me");
-}
+$me = $_COOKIE['PHPSESSID'];
+$logged = $redis->hgetall("user:$me");
+
 // Start session
 session_start();
 
@@ -25,12 +26,12 @@ session_start();
     <header>
         <h1>
             <?php
-            session_start();
-            if (isset($_COOKIE['PHPSESSID'])) {
+            if ($redis->exists("user:$me")) {
                 echo $logged['merchantname'];
             } else {
-                // echo '<script>window.location.href = "login.php"</script>';
+                echo '<script>window.location.href = "login.php"</script>';
             }
+
             ?>
         </h1>
         <div class="head">
@@ -67,10 +68,6 @@ session_start();
             if (isset($logged['merchantname'])) {
                 // Display user details if logged in
                 echo "<h2> " . $logged['username'] . " </h2>";
-                if (isset($_COOKIE['user_id'])) {
-                    // Get the value of the "session_id" cookie
-                    $sessionId = $_COOKIE['session_id'];
-                }
                 // echo "<h2>Welcome, " . $logged['merchantid'] . "</h2>";
                 echo "<div class='profile-image'><img src='assets\profile.png' alt='Profile Image'></div>";
             } else {
