@@ -26,7 +26,7 @@ session_start();
     <header>
         <h1>
             <?php
-            if (isset($logged["user:$me"])) {
+            if ($redis->exists("user:$me")) {
                 echo $logged['merchantname'];
             } else {
                 echo '<script>window.location.href = "login.php"</script>';
