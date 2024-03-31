@@ -108,7 +108,7 @@ session_start();
                                 setcookie("user_id", $me, time() + 7200, "/");
                                 // Redirect to the home page
                                 // header("Location: index.php");
-                                // echo '<script>window.location.href = "index.php"</script>';
+                                echo '<script>window.location.href = "index.php"</script>';
                             } catch (Exception $e) {
                                 // Handle the error
                                 echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
